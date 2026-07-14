@@ -1,0 +1,24 @@
+OSHA FORM 300 SUPPLEMENTARY NARRATIVE — NEAR-MISS REPORT
+Establishment: Hollis Ridge Distribution Center, Building 2 (synthetic site)
+Case number: NM-2026-0117 | Date of incident: Tuesday, 06:41 | Shift: first
+Employee (pseudonym): D. Okafor, order picker, 14 months on site
+Equipment involved: counterbalance forklift #FLT-09, operator R. Sandoval
+
+Description of incident: Order picker exited the break room at the head of
+aisle seven wearing personal earbuds in both ears, in violation of posted
+floor policy. At the same time forklift #FLT-09 was reversing a 900 kg pallet
+from the end-cap racking toward the blind corner at bay 7-C. The convex
+mirror mounted above bay 7-C was fogged from the overnight temperature swing
+and had not been wiped during the pre-shift walk. The picker stepped off the
+marked pedestrian lane to cut the corner. The operator braked at
+approximately 3 km/h of remaining speed; the load shifted against the
+backrest. Forks came to rest approximately 10 cm from the picker's hip. No
+contact, no injury, no property damage.
+
+Contributing factors identified: (1) hearing occluded by earbuds; (2) fogged
+convex mirror not inspected; (3) pedestrian left the marked lane at a known
+blind corner. Prior similar events this quarter: two.
+
+Corrective actions proposed: earbud prohibition enforcement at floor entry;
+mirror wipe added to pre-shift checklist; repaint pedestrian lane through the
+7-C corner with corner guard rail quote requested.

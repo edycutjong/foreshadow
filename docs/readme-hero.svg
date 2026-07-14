@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" role="img" aria-label="Foreshadow — your near-miss incident becomes tomorrow's cinematic safety film">
+  <defs>
+    <radialGradient id="bgA" cx="72%" cy="16%" r="55%">
+      <stop offset="0" stop-color="#F97316" stop-opacity=".16"/><stop offset="1" stop-color="#F97316" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bgB" cx="10%" cy="92%" r="50%">
+      <stop offset="0" stop-color="#FBBF24" stop-opacity=".10"/><stop offset="1" stop-color="#FBBF24" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="brand" gradientUnits="userSpaceOnUse" x1="60" y1="0" x2="960" y2="0">
+      <stop offset="0" stop-color="#F5F2EC"/><stop offset=".55" stop-color="#F97316"/><stop offset="1" stop-color="#FBBF24"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="-260 0;260 0;-260 0" dur="7s" repeatCount="indefinite"/>
+    </linearGradient>
+    <linearGradient id="flame" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FBBF24"/><stop offset="1" stop-color="#F97316"/>
+    </linearGradient>
+    <filter id="blur14" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="14"/></filter>
+    <filter id="blur3"><feGaussianBlur stdDeviation="3"/></filter>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#F5F2EC" stroke-opacity=".05" stroke-width="1"/>
+    </pattern>
+    <clipPath id="stripClip"><rect x="620" y="112" width="596" height="128" rx="14"/></clipPath>
+    <linearGradient id="stripFadeG" x1="620" y1="0" x2="880" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#000"/><stop offset=".55" stop-color="#666"/><stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <mask id="stripFade"><rect x="620" y="100" width="600" height="152" fill="url(#stripFadeG)"/></mask>
+    <style>
+      .disp { font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+      .mono { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; }
+    </style>
+  </defs>
+
+  <rect width="1280" height="640" fill="#0E1116"/>
+  <rect width="1280" height="640" fill="url(#bgA)"><animate attributeName="opacity" values=".7;1;.7" dur="5s" repeatCount="indefinite"/></rect>
+  <rect width="1280" height="640" fill="url(#bgB)"/>
+  <g><rect x="-48" y="-48" width="1376" height="736" fill="url(#grid)"/>
+    <animateTransform attributeName="transform" type="translate" from="0 0" to="48 48" dur="5s" repeatCount="indefinite"/></g>
+
+  <!-- ember particles -->
+  <g fill="#FBBF24">
+    <circle cx="140" cy="600" r="3" opacity="0"><animate attributeName="cy" values="620;180" dur="7s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.7;0" dur="7s" repeatCount="indefinite"/></circle>
+    <circle cx="420" cy="600" r="2.4" opacity="0"><animate attributeName="cy" values="640;260" dur="8.5s" begin="1.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.55;0" dur="8.5s" begin="1.4s" repeatCount="indefinite"/></circle>
+    <circle cx="980" cy="600" r="2.8" opacity="0"><animate attributeName="cy" values="640;300" dur="7.6s" begin="2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.6;0" dur="7.6s" begin="2.6s" repeatCount="indefinite"/></circle>
+    <circle cx="1180" cy="600" r="2.2" opacity="0"><animate attributeName="cy" values="640;220" dur="9s" begin=".8s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.5;0" dur="9s" begin=".8s" repeatCount="indefinite"/></circle>
+  </g>
+
+  <!-- FILM STRIP: sliding, seamless; left edge fades under the title -->
+  <g clip-path="url(#stripClip)" mask="url(#stripFade)">
+    <rect x="620" y="112" width="596" height="128" fill="#171C24"/>
+    <g>
+      <animateTransform attributeName="transform" type="translate" from="0 0" to="-216 0" dur="3.2s" repeatCount="indefinite"/>
+      <g id="frames">
+        <g transform="translate(632 124)">
+          <rect width="96" height="104" rx="8" fill="none" stroke="#F97316" stroke-width="2.5" stroke-opacity=".85"/>
+          <path d="M34 38 L34 68 L62 53 Z" fill="url(#flame)"/>
+        </g>
+        <g transform="translate(740 124)"><rect width="96" height="104" rx="8" fill="none" stroke="#F97316" stroke-width="2.5" stroke-opacity=".55"/><rect x="20" y="30" width="56" height="8" rx="4" fill="#FBBF24" opacity=".7"/><rect x="20" y="48" width="40" height="8" rx="4" fill="#9AA3B2" opacity=".6"/><rect x="20" y="66" width="48" height="8" rx="4" fill="#9AA3B2" opacity=".4"/></g>
+        <g transform="translate(848 124)"><rect width="96" height="104" rx="8" fill="none" stroke="#F97316" stroke-width="2.5" stroke-opacity=".85"/><path d="M34 38 L34 68 L62 53 Z" fill="url(#flame)"/></g>
+        <g transform="translate(956 124)"><rect width="96" height="104" rx="8" fill="none" stroke="#F97316" stroke-width="2.5" stroke-opacity=".55"/><rect x="20" y="30" width="56" height="8" rx="4" fill="#FBBF24" opacity=".7"/><rect x="20" y="48" width="40" height="8" rx="4" fill="#9AA3B2" opacity=".6"/><rect x="20" y="66" width="48" height="8" rx="4" fill="#9AA3B2" opacity=".4"/></g>
+        <g transform="translate(1064 124)"><rect width="96" height="104" rx="8" fill="none" stroke="#F97316" stroke-width="2.5" stroke-opacity=".85"/><path d="M34 38 L34 68 L62 53 Z" fill="url(#flame)"/></g>
+        <g transform="translate(1172 124)"><rect width="96" height="104" rx="8" fill="none" stroke="#F97316" stroke-width="2.5" stroke-opacity=".55"/><rect x="20" y="30" width="56" height="8" rx="4" fill="#FBBF24" opacity=".7"/><rect x="20" y="48" width="40" height="8" rx="4" fill="#9AA3B2" opacity=".6"/><rect x="20" y="66" width="48" height="8" rx="4" fill="#9AA3B2" opacity=".4"/></g>
+        <g transform="translate(1280 124)"><rect width="96" height="104" rx="8" fill="none" stroke="#F97316" stroke-width="2.5" stroke-opacity=".85"/><path d="M34 38 L34 68 L62 53 Z" fill="url(#flame)"/></g>
+        <g transform="translate(1388 124)"><rect width="96" height="104" rx="8" fill="none" stroke="#F97316" stroke-width="2.5" stroke-opacity=".55"/><rect x="20" y="30" width="56" height="8" rx="4" fill="#FBBF24" opacity=".7"/><rect x="20" y="48" width="40" height="8" rx="4" fill="#9AA3B2" opacity=".6"/><rect x="20" y="66" width="48" height="8" rx="4" fill="#9AA3B2" opacity=".4"/></g>
+      </g>
+    </g>
+    <!-- sprocket holes -->
+    <g fill="#0E1116"><rect x="620" y="112" width="596" height="14"/><rect x="620" y="226" width="596" height="14"/></g>
+    <g fill="#F5F2EC" opacity=".25">
+      <rect x="636" y="115" width="10" height="8" rx="2"/><rect x="672" y="115" width="10" height="8" rx="2"/><rect x="708" y="115" width="10" height="8" rx="2"/><rect x="744" y="115" width="10" height="8" rx="2"/><rect x="780" y="115" width="10" height="8" rx="2"/><rect x="816" y="115" width="10" height="8" rx="2"/><rect x="852" y="115" width="10" height="8" rx="2"/><rect x="888" y="115" width="10" height="8" rx="2"/><rect x="924" y="115" width="10" height="8" rx="2"/><rect x="960" y="115" width="10" height="8" rx="2"/><rect x="996" y="115" width="10" height="8" rx="2"/><rect x="1032" y="115" width="10" height="8" rx="2"/><rect x="1068" y="115" width="10" height="8" rx="2"/><rect x="1104" y="115" width="10" height="8" rx="2"/><rect x="1140" y="115" width="10" height="8" rx="2"/><rect x="1176" y="115" width="10" height="8" rx="2"/>
+      <rect x="636" y="229" width="10" height="8" rx="2"/><rect x="672" y="229" width="10" height="8" rx="2"/><rect x="708" y="229" width="10" height="8" rx="2"/><rect x="744" y="229" width="10" height="8" rx="2"/><rect x="780" y="229" width="10" height="8" rx="2"/><rect x="816" y="229" width="10" height="8" rx="2"/><rect x="852" y="229" width="10" height="8" rx="2"/><rect x="888" y="229" width="10" height="8" rx="2"/><rect x="924" y="229" width="10" height="8" rx="2"/><rect x="960" y="229" width="10" height="8" rx="2"/><rect x="996" y="229" width="10" height="8" rx="2"/><rect x="1032" y="229" width="10" height="8" rx="2"/><rect x="1068" y="229" width="10" height="8" rx="2"/><rect x="1104" y="229" width="10" height="8" rx="2"/><rect x="1140" y="229" width="10" height="8" rx="2"/><rect x="1176" y="229" width="10" height="8" rx="2"/>
+    </g>
+  </g>
+
+  <!-- kicker -->
+  <g opacity="0"><animate attributeName="opacity" from="0" to="1" dur=".6s" begin=".1s" fill="freeze"/>
+    <text x="64" y="92" class="mono" font-size="15" letter-spacing="4" fill="#FBBF24">QWEN CLOUD // TRACK 2 · AI SHOWRUNNER</text>
+  </g>
+
+  <!-- title with glow -->
+  <g opacity="0" transform="translate(0 26)">
+    <animate attributeName="opacity" from="0" to="1" dur=".9s" begin=".25s" fill="freeze"/>
+    <animateTransform attributeName="transform" type="translate" from="0 26" to="0 0" dur=".9s" begin=".25s" fill="freeze" calcMode="spline" keySplines=".22 1 .36 1" keyTimes="0;1" values="0 26;0 0"/>
+    <text x="58" y="212" class="disp" font-size="122" font-weight="800" letter-spacing="-3" fill="#F97316" filter="url(#blur14)" opacity=".55">Foreshadow<animate attributeName="opacity" values=".35;.7;.35" dur="3.4s" repeatCount="indefinite"/></text>
+    <text x="58" y="212" class="disp" font-size="122" font-weight="800" letter-spacing="-3" fill="url(#brand)">Foreshadow</text>
+  </g>
+
+  <!-- tagline -->
+  <g opacity="0"><animate attributeName="opacity" from="0" to="1" dur=".8s" begin=".55s" fill="freeze"/>
+    <text x="64" y="262" class="disp" font-size="24" fill="#9AA3B2">Your near-miss incident report becomes tomorrow's</text>
+    <text x="64" y="296" class="disp" font-size="24" fill="#9AA3B2">cinematic safety film — <tspan fill="#F5F2EC" font-weight="600">shot by an agent film crew.</tspan></text>
+  </g>
+
+  <!-- metric -->
+  <g opacity="0"><animate attributeName="opacity" from="0" to="1" dur=".8s" begin=".85s" fill="freeze"/>
+    <text x="62" y="386" class="disp" font-size="76" font-weight="800" fill="#F97316" filter="url(#blur3)" opacity=".6">$3.84<animate attributeName="opacity" values=".4;.8;.4" dur="2.6s" repeatCount="indefinite"/></text>
+    <text x="62" y="386" class="disp" font-size="76" font-weight="800" fill="#F5F2EC">$3.84</text>
+    <text x="300" y="360" class="mono" font-size="16" fill="#9AA3B2">per finished film</text>
+    <text x="300" y="384" class="mono" font-size="16" fill="#FBBF24">vs $15,000 + 8 weeks</text>
+  </g>
+
+  <!-- features -->
+  <g class="disp" font-size="18" fill="#F5F2EC" opacity="0"><animate attributeName="opacity" from="0" to="1" dur=".8s" begin="1.1s" fill="freeze"/>
+    <text x="64" y="446"><tspan fill="#F97316">◆</tspan>  Screenwriter · Line Producer · DP · QC critic — one crew</text>
+    <text x="64" y="480"><tspan fill="#F97316">◆</tspan>  Budget-knapsack rendering with a live cost ledger</text>
+    <text x="64" y="514"><tspan fill="#F97316">◆</tspan>  Every frame provenance-signed (Merkle + Ed25519)</text>
+  </g>
+
+  <!-- pipeline diagram -->
+  <g>
+    <path id="fsflow" d="M632 400 H1216" stroke="#F97316" stroke-opacity=".28" stroke-width="2" stroke-dasharray="8 7" fill="none">
+      <animate attributeName="stroke-dashoffset" values="0;-30" dur="1.1s" repeatCount="indefinite"/>
+    </path>
+    <circle r="5" fill="#FBBF24" filter="url(#blur3)"><animateMotion dur="2.6s" repeatCount="indefinite" path="M632 400 H1216"/></circle>
+    <g class="mono" font-size="14" text-anchor="middle">
+      <rect x="620" y="374" width="128" height="52" rx="12" fill="#171C24" stroke="#FBBF24" stroke-opacity=".6"/>
+      <text x="684" y="405" fill="#FBBF24">INCIDENT</text>
+      <rect x="772" y="374" width="150" height="52" rx="12" fill="#171C24" stroke="#F5F2EC" stroke-opacity=".22"/>
+      <text x="847" y="405" fill="#F5F2EC">SCREENPLAY</text>
+      <rect x="946" y="374" width="128" height="52" rx="12" fill="#171C24" stroke="#F97316" stroke-opacity=".8"><animate attributeName="stroke-opacity" values=".5;1;.5" dur="2s" repeatCount="indefinite"/></rect>
+      <text x="1010" y="405" fill="#F97316">BUDGET $</text>
+      <rect x="1098" y="374" width="118" height="52" rx="12" fill="#171C24" stroke="#F97316"/>
+      <text x="1157" y="405" fill="#F5F2EC">FILM ▶</text>
+    </g>
+    <g class="mono" font-size="13">
+      <rect x="947" y="330" width="269" height="30" rx="15" fill="none" stroke="#9AA3B2" stroke-opacity=".4" stroke-dasharray="5 5"/>
+      <circle cx="967" cy="345" r="4" fill="#34D399"><animate attributeName="opacity" values="1;.3;1" dur="1.6s" repeatCount="indefinite"/></circle>
+      <text x="983" y="350" fill="#9AA3B2">QC critic · reject → demote</text>
+    </g>
+  </g>
+
+  <!-- pills -->
+  <g class="mono" font-size="13" opacity="0"><animate attributeName="opacity" from="0" to="1" dur=".8s" begin="1.35s" fill="freeze"/>
+    <rect x="64" y="574" width="133" height="30" rx="15" fill="#171C24" stroke="#F5F2EC" stroke-opacity=".14"/><circle cx="82" cy="589" r="3.5" fill="#F97316"/><text x="94" y="594" fill="#9AA3B2">qwen3.7-max</text>
+    <rect x="209" y="574" width="125" height="30" rx="15" fill="#171C24" stroke="#F5F2EC" stroke-opacity=".14"/><circle cx="227" cy="589" r="3.5" fill="#F97316"/><text x="239" y="594" fill="#9AA3B2">wan2.7-i2v</text>
+    <rect x="346" y="574" width="109" height="30" rx="15" fill="#171C24" stroke="#F5F2EC" stroke-opacity=".14"/><circle cx="364" cy="589" r="3.5" fill="#F97316"/><text x="376" y="594" fill="#9AA3B2">qwen3-vl</text>
+    <rect x="467" y="574" width="117" height="30" rx="15" fill="#171C24" stroke="#F5F2EC" stroke-opacity=".14"/><circle cx="485" cy="589" r="3.5" fill="#F97316"/><text x="497" y="594" fill="#9AA3B2">cosyvoice</text>
+    <rect x="596" y="574" width="125" height="30" rx="15" fill="#171C24" stroke="#F5F2EC" stroke-opacity=".14"/><circle cx="614" cy="589" r="3.5" fill="#F97316"/><text x="626" y="594" fill="#9AA3B2">Alibaba FC</text>
+    <rect x="733" y="574" width="125" height="30" rx="15" fill="#171C24" stroke="#F5F2EC" stroke-opacity=".14"/><circle cx="751" cy="589" r="3.5" fill="#F97316"/><text x="763" y="594" fill="#9AA3B2">batch −50%</text>
+    <g text-anchor="end"><text x="1216" y="594" fill="#9AA3B2" opacity=".8">INCIDENT → FILM · 10 MIN</text></g>
+  </g>
+
+  <!-- scanline sweep -->
+  <rect x="-160" y="0" width="120" height="640" fill="#F5F2EC" opacity=".04" transform="skewX(-12)">
+    <animate attributeName="x" values="-200;1400" dur="6s" repeatCount="indefinite"/>
+  </rect>
+</svg>

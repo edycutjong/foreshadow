@@ -1,0 +1,44 @@
+# Serverless Devs spec for the Foreshadow pipeline worker on Alibaba
+# Function Compute (https://www.serverless-devs.com). Deploy with:
+#   s deploy
+# STATUS: template is complete and valid; the account has not been deployed to
+# yet (see PROOF.md). Region/account placeholders are read from the shell env
+# so no secrets live in the repo.
+
+edition: 3.0.0
+name: foreshadow-worker
+access: default
+
+vars:
+  region: ${env.ALIBABA_REGION}          # e.g. ap-southeast-1
+  service: foreshadow
+
+resources:
+  worker:
+    component: fc3
+    props:
+      region: ${vars.region}
+      functionName: foreshadow-pipeline-worker
+      description: "Foreshadow: incident report -> provenance-signed safety film"
+      runtime: python3.12
+      handler: handler.handler
+      memorySize: 2048
+      timeout: 900                        # a full film job (async renders) fits in 15m
+      cpu: 1
+      diskSize: 512
+      code: ./
+      environmentVariables:
+        FORESHADOW_HOME: /mnt/foreshadow
+        FORESHADOW_TRANSPORT: live
+        DASHSCOPE_API_KEY: ${env.DASHSCOPE_API_KEY}
+      layers:
+        # Prebuilt ffmpeg layer for the stitch stage; local fallback documented
+        # in src/foreshadow/render/stitch.py when the binary is absent.
+        - ${env.FFMPEG_LAYER_ARN}
+      triggers:
+        - triggerName: http
+          triggerType: http
+          triggerConfig:
+            authType: anonymous
+            methods:
+              - POST

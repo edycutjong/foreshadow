@@ -1,0 +1,26 @@
+{
+  "incident_id": "forklift",
+  "title": "Aisle Seven",
+  "logline": "A pair of earbuds and a fogged mirror put a picker one step from a five-ton forklift.",
+  "beats": [
+    {
+      "beat": 1,
+      "heading": "INT. WAREHOUSE, AISLE SEVEN - DAWN",
+      "description": "Dawn shift. Racks tower over faded floor tape. Dana clips on a hi-vis vest, slides in earbuds, and heads for aisle seven while a forklift works the far end, reversing toward the blind corner under a fogged convex mirror.",
+      "vo": "Tuesday, 6:41 a.m. Third near-miss this quarter starts like every other shift."
+    },
+    {
+      "beat": 2,
+      "heading": "INT. AISLE SEVEN, BLIND CORNER - MOMENTS LATER",
+      "description": "The forklift emerges from the blind corner exactly as Dana, earbuds in, steps off the pedestrian lane. The operator slams the brake; the pallet load shifts; the forks stop a hand's width from Dana's hip. Both freeze in the silence.",
+      "vo": "He never heard it coming - and the mirror was right there."
+    },
+    {
+      "beat": 3,
+      "heading": "INT. AISLE SEVEN - LATER",
+      "description": "The supervisor files the incident report. Replay from the convex mirror: both paths visible the whole time. Corrective pass: earbuds out, the marked pedestrian lane walked, the mirror wiped clean.",
+      "vo": "The next one is not a near-miss unless somebody changes the routine today."
+    }
+  ],
+  "rule_card": "Earbuds out on the floor. Walk the marked lane. Mirrors are for looking."
+}

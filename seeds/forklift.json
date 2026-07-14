@@ -1,0 +1,48 @@
+{
+  "budgets": {
+    "2": {
+      "demotions": 5,
+      "quality_pct": 49.8,
+      "render_spend_usd": 0.75,
+      "tier_mix": {
+        "connective": 1,
+        "hero": 1,
+        "kenburns": 6
+      }
+    },
+    "4": {
+      "demotions": 0,
+      "quality_pct": 78.4,
+      "render_spend_usd": 2.1,
+      "tier_mix": {
+        "connective": 3,
+        "hero": 3,
+        "kenburns": 2
+      }
+    },
+    "8": {
+      "demotions": 0,
+      "quality_pct": 92.0,
+      "render_spend_usd": 2.7,
+      "tier_mix": {
+        "connective": 0,
+        "hero": 6,
+        "kenburns": 2
+      }
+    }
+  },
+  "desired_tiers": {
+    "S1": "kenburns",
+    "S2": "connective",
+    "S3": "connective",
+    "S4": "hero",
+    "S5": "hero",
+    "S6": "kenburns",
+    "S7": "hero",
+    "S8": "connective"
+  },
+  "expected_beats": 3,
+  "expected_shots": 8,
+  "incident_id": "forklift",
+  "planted_qc_rejections_at_4": []
+}

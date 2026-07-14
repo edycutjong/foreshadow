@@ -1,0 +1,25 @@
+OSHA FORM 300 SUPPLEMENTARY NARRATIVE — INJURY REPORT
+Establishment: Corvid Analytical Services, receiving area (synthetic site)
+Case number: CH-2026-0059 | Date of incident: Monday, 08:24 | Shift: first
+Employee (pseudonym): P. Nair, laboratory technician, 2 years on site
+Substance involved: solvent degreaser (petroleum distillate blend)
+
+Description of incident: During intake in the receiving area, a technician
+began transferring an unlabeled secondary container of degreaser that had
+been decanted by the previous shift and never marked. The technician handled
+the container without chemical-resistant gloves and without a face shield,
+with sleeves rolled up. The container cap had been reseated but not torqued;
+as the container was lifted to the bench scale the cap released and an
+estimated 150 ml of solvent splashed across the technician's right forearm
+and cheek. The employee was walked to the eyewash station and flushed for a
+full fifteen minutes while a coworker retrieved the safety data sheet. The
+spill kit mounted by the receiving door was used to absorb residue. Injury:
+minor chemical irritation, no lost time. Property damage: none.
+
+Contributing factors identified: (1) secondary container not labeled as
+required; (2) PPE (gloves, face shield) not worn for an open-container
+transfer; (3) cap not verified before lifting.
+
+Corrective actions proposed: label-at-decant rule with pre-printed blanks at
+every bench; glove and face-shield station moved to the receiving door;
+cap-torque check added to the transfer procedure.

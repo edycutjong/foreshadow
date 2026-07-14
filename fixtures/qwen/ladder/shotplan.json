@@ -1,0 +1,65 @@
+{
+  "incident_id": "ladder",
+  "shots": [
+    {
+      "id": "L1",
+      "scene": 1,
+      "duration_s": 6,
+      "action": "A crew member hauls the extension ladder off the truck rack in the yard.",
+      "camera": "wide, morning backlight",
+      "narrative_weight": 5,
+      "safety_elements": ["extension_ladder"],
+      "vo_line": "Fifteen-minute job, they said."
+    },
+    {
+      "id": "L2",
+      "scene": 1,
+      "duration_s": 6,
+      "action": "Inside, he sets the feet on the wet floor by the loading door - no mat, no footing check.",
+      "camera": "floor-level close on the feet",
+      "narrative_weight": 5,
+      "safety_elements": ["wet_floor"],
+      "vo_line": "The floor had been mopped four minutes earlier."
+    },
+    {
+      "id": "L3",
+      "scene": 2,
+      "duration_s": 6,
+      "action": "The ladder leans too steep, nowhere near a four to one angle, rails flexing as he starts to climb.",
+      "camera": "profile medium, static",
+      "narrative_weight": 5,
+      "safety_elements": ["four_to_one_angle"],
+      "vo_line": "Four to one. The rule fits in four words."
+    },
+    {
+      "id": "L4",
+      "scene": 2,
+      "duration_s": 6,
+      "action": "Three rungs from the top he leans into an overreach, belt buckle past the rail, fingers stretching for the junction box.",
+      "camera": "slow push from below",
+      "narrative_weight": 5,
+      "safety_elements": ["overreach"],
+      "vo_line": "Six more inches. Or thirty seconds to move the ladder."
+    },
+    {
+      "id": "L5",
+      "scene": 2,
+      "duration_s": 6,
+      "action": "The feet lose grip - the ladder slide begins - he rides it down as it skates off the wet concrete.",
+      "camera": "handheld, hard cut on impact",
+      "narrative_weight": 5,
+      "safety_elements": ["ladder_slide"],
+      "vo_line": "Twelve feet, one second."
+    },
+    {
+      "id": "L6",
+      "scene": 3,
+      "duration_s": 6,
+      "action": "Corrective replay: feet on dry footing, a proper angle, three points of contact all the way, tie off at the top.",
+      "camera": "steadicam, warm grade",
+      "narrative_weight": 5,
+      "safety_elements": ["three_points_of_contact", "tie_off"],
+      "vo_line": "Same job. Sixteen minutes. Done once."
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "incident_id": "forklift",
+  "shots": [
+    {
+      "id": "S1",
+      "scene": 1,
+      "duration_s": 3,
+      "action": "Establishing: dawn light over warehouse aisle seven, racks towering, floor tape faded.",
+      "camera": "high wide, slow drift",
+      "narrative_weight": 3,
+      "safety_elements": ["warehouse_aisle"],
+      "vo_line": "Tuesday, 6:41 a.m. Aisle seven."
+    },
+    {
+      "id": "S2",
+      "scene": 1,
+      "duration_s": 4,
+      "action": "Worker Dana clips on a hi-vis vest, slides in earbuds, and steps out of the break room.",
+      "camera": "medium tracking, shallow focus",
+      "narrative_weight": 5,
+      "safety_elements": ["earbuds"],
+      "vo_line": "Same playlist as every shift."
+    },
+    {
+      "id": "S3",
+      "scene": 1,
+      "duration_s": 4,
+      "action": "A forklift reverses toward the blind corner; the convex mirror overhead is fogged and ignored.",
+      "camera": "low angle from the racking",
+      "narrative_weight": 6,
+      "safety_elements": ["blind_corner", "convex_mirror"],
+      "vo_line": "The mirror was installed after the last one."
+    },
+    {
+      "id": "S4",
+      "scene": 2,
+      "duration_s": 5,
+      "action": "The near-miss: the forklift emerges from the blind corner as Dana, earbuds in, steps off the pedestrian lane into its path.",
+      "camera": "low dolly, slow push",
+      "narrative_weight": 9,
+      "safety_elements": ["blind_corner", "earbuds", "pedestrian_lane"],
+      "vo_line": "He never heard it coming."
+    },
+    {
+      "id": "S5",
+      "scene": 2,
+      "duration_s": 5,
+      "action": "The operator slams the brake; the pallet load shifts and shudders; the forks stop a hand's width from Dana.",
+      "camera": "whip to close-up, handheld",
+      "narrative_weight": 8,
+      "safety_elements": ["load_shift"],
+      "vo_line": "A hand's width. That was the margin."
+    },
+    {
+      "id": "S6",
+      "scene": 3,
+      "duration_s": 3,
+      "action": "Later: the supervisor types the incident report, the empty aisle behind the office glass.",
+      "camera": "static over-the-shoulder",
+      "narrative_weight": 2,
+      "safety_elements": ["incident_report"],
+      "vo_line": "Filed as paperwork. Near-miss number three."
+    },
+    {
+      "id": "S7",
+      "scene": 3,
+      "duration_s": 5,
+      "action": "Replay from above: the same three seconds, seen from the convex mirror - both paths visible the whole time.",
+      "camera": "mirror POV, fisheye",
+      "narrative_weight": 7,
+      "safety_elements": ["convex_mirror"],
+      "vo_line": "The mirror saw it all. Nobody looked."
+    },
+    {
+      "id": "S8",
+      "scene": 3,
+      "duration_s": 4,
+      "action": "Corrective: Dana pockets the earbuds - earbuds out per the floor sign - walks the marked pedestrian lane, and the operator wipes the convex mirror clean.",
+      "camera": "steadicam follow, warm grade",
+      "narrative_weight": 4,
+      "safety_elements": ["earbuds_out", "pedestrian_lane", "convex_mirror"],
+      "vo_line": "Three fixes. Ten seconds. Nobody in the aisle guesses."
+    }
+  ]
+}

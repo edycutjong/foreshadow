@@ -1,0 +1,25 @@
+OSHA FORM 300 SUPPLEMENTARY NARRATIVE — INJURY REPORT
+Establishment: Merrow & Sons Fabrication, Plant 1 loading dock (synthetic site)
+Case number: LD-2026-0033 | Date of incident: Thursday, 14:05 | Shift: second
+Employee (pseudonym): T. Brandt, maintenance electrician, 6 years on site
+Equipment involved: 24 ft aluminum extension ladder, asset L-24-03
+
+Description of incident: Electrician retrieved the extension ladder from the
+yard truck to service a junction box above the loading door. The floor inside
+the loading door had been mopped approximately four minutes earlier and was
+still wet; no footing mat was placed and the wet-floor sign was behind the
+door leaf. The ladder was set at an angle visibly steeper than the four-to-one
+rule to clear a pallet staged below the box. Twelve feet up, the employee
+leaned laterally past the right rail (overreach) to reach the junction box
+rather than descending to reposition. The ladder feet lost traction on the
+wet concrete and slid outward; the employee rode the ladder down and landed
+on the staged pallet. Injury: contusion to left forearm and hip, one day of
+restricted duty. Property damage: bent ladder rail, asset L-24-03 tagged out.
+
+Contributing factors identified: (1) wet floor, no mat, sign not visible;
+(2) set-up angle far steeper than four to one; (3) overreach past the rail;
+(4) no tie off point used despite anchor eye present above the door.
+
+Corrective actions proposed: ladder set-up checklist on the asset tag
+(angle, footing, tie off, three points of contact); mop schedule moved off
+shift; staged pallets excluded from the door zone.

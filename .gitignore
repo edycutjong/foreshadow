@@ -1,0 +1,29 @@
+# virtualenv / python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/lib/
+.pytest_cache/
+.coverage
+
+# runtime output (jobs, sqlite db) — NOT the committed fixture cache
+var/
+
+# real keys (demo keys are derived deterministically in code, never stored)
+keys/*.key
+
+# OS noise
+.DS_Store
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Coverage / lint caches
+coverage.xml
+htmlcov/
+.mypy_cache/
+.ruff_cache/

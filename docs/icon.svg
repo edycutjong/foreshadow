@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Foreshadow icon">
+  <defs>
+    <linearGradient id="fg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FBBF24"/><stop offset="1" stop-color="#F97316"/>
+    </linearGradient>
+    <radialGradient id="fglow" cx=".5" cy=".45" r=".6">
+      <stop offset="0" stop-color="#F97316" stop-opacity=".55"/><stop offset="1" stop-color="#F97316" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="fsoft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="10"/></filter>
+    <clipPath id="ftri"><path d="M256 96 L436 400 L76 400 Z"/></clipPath>
+  </defs>
+  <rect x="16" y="16" width="480" height="480" rx="104" fill="#0E1116"/>
+  <rect x="16" y="16" width="480" height="480" rx="104" fill="url(#fglow)">
+    <animate attributeName="opacity" values=".55;1;.55" dur="3.6s" repeatCount="indefinite"/>
+  </rect>
+  <!-- hazard triangle ring -->
+  <path d="M256 84 L448 408 L64 408 Z" fill="none" stroke="url(#fg)" stroke-width="30" stroke-linejoin="round">
+    <animate attributeName="stroke-width" values="30;34;30" dur="3.6s" repeatCount="indefinite"/>
+  </path>
+  <!-- projector light sweep inside the triangle -->
+  <g clip-path="url(#ftri)">
+    <rect x="-220" y="60" width="150" height="400" fill="#FBBF24" opacity=".18" transform="skewX(-18)">
+      <animate attributeName="x" values="-260;560" dur="3.6s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+  <!-- play glyph = the film begins -->
+  <path d="M216 208 L216 336 L330 272 Z" fill="url(#fg)" filter="url(#fsoft)" opacity=".8">
+    <animate attributeName="opacity" values=".5;.95;.5" dur="1.8s" repeatCount="indefinite"/>
+  </path>
+  <path d="M216 208 L216 336 L330 272 Z" fill="url(#fg)"/>
+  <!-- film sprocket dots -->
+  <g fill="#FBBF24">
+    <circle cx="146" cy="376" r="9"><animate attributeName="opacity" values="1;.25;1" dur="1.8s" repeatCount="indefinite"/></circle>
+    <circle cx="196" cy="376" r="9"><animate attributeName="opacity" values="1;.25;1" dur="1.8s" begin=".3s" repeatCount="indefinite"/></circle>
+    <circle cx="246" cy="376" r="9"><animate attributeName="opacity" values="1;.25;1" dur="1.8s" begin=".6s" repeatCount="indefinite"/></circle>
+    <circle cx="296" cy="376" r="9"><animate attributeName="opacity" values="1;.25;1" dur="1.8s" begin=".9s" repeatCount="indefinite"/></circle>
+    <circle cx="346" cy="376" r="9"><animate attributeName="opacity" values="1;.25;1" dur="1.8s" begin="1.2s" repeatCount="indefinite"/></circle>
+  </g>
+</svg>

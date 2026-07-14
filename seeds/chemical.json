@@ -1,0 +1,49 @@
+{
+  "budgets": {
+    "2": {
+      "demotions": 5,
+      "quality_pct": 52.1,
+      "render_spend_usd": 0.75,
+      "tier_mix": {
+        "connective": 1,
+        "hero": 1,
+        "kenburns": 5
+      }
+    },
+    "4": {
+      "demotions": 0,
+      "quality_pct": 80.8,
+      "render_spend_usd": 2.0,
+      "tier_mix": {
+        "connective": 3,
+        "hero": 3,
+        "kenburns": 1
+      }
+    },
+    "8": {
+      "demotions": 0,
+      "quality_pct": 94.5,
+      "render_spend_usd": 2.6,
+      "tier_mix": {
+        "connective": 0,
+        "hero": 6,
+        "kenburns": 1
+      }
+    }
+  },
+  "desired_tiers": {
+    "C1": "connective",
+    "C2": "connective",
+    "C3": "hero",
+    "C4": "connective",
+    "C5": "kenburns",
+    "C6": "hero",
+    "C7": "connective"
+  },
+  "expected_beats": 3,
+  "expected_shots": 7,
+  "incident_id": "chemical",
+  "planted_qc_rejections_at_4": [
+    "C4"
+  ]
+}

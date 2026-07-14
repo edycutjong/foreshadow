@@ -1,0 +1,26 @@
+{
+  "incident_id": "ladder",
+  "title": "Four to One",
+  "logline": "A wet floor, a steep lean, and one overreach turn a junction-box fix into a twelve-foot fall.",
+  "beats": [
+    {
+      "beat": 1,
+      "heading": "EXT. YARD / INT. LOADING DOOR - MORNING",
+      "description": "A crew member hauls the extension ladder off the truck and sets its feet on the wet floor by the loading door - no mat, no footing check, the lean far steeper than four to one.",
+      "vo": "The job was fifteen minutes. The setup took ninety seconds too few."
+    },
+    {
+      "beat": 2,
+      "heading": "INT. LOADING DOOR, TWELVE FEET UP - CONTINUOUS",
+      "description": "Three rungs from the top he leans into an overreach, buckle past the rail, fingers stretching for the junction box. The feet lose grip on the wet concrete and the ladder slides out from under him.",
+      "vo": "Overreach is a decision. It just never feels like one."
+    },
+    {
+      "beat": 3,
+      "heading": "INT. LOADING DOOR - REPLAY",
+      "description": "Corrective replay: dry footing, a proper four-to-one angle, three points of contact all the way up, tie off at the top. The same job, done in sixteen minutes, done once.",
+      "vo": "One minute of setup buys you the whole way down."
+    }
+  ],
+  "rule_card": "Set the angle. Dry the feet. Keep three points of contact - and never overreach."
+}

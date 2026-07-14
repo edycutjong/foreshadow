@@ -1,0 +1,46 @@
+{
+  "budgets": {
+    "2": {
+      "demotions": 4,
+      "quality_pct": 40.0,
+      "render_spend_usd": 0.6,
+      "tier_mix": {
+        "connective": 2,
+        "hero": 0,
+        "kenburns": 4
+      }
+    },
+    "4": {
+      "demotions": 0,
+      "quality_pct": 73.3,
+      "render_spend_usd": 2.4,
+      "tier_mix": {
+        "connective": 4,
+        "hero": 2,
+        "kenburns": 0
+      }
+    },
+    "8": {
+      "demotions": 0,
+      "quality_pct": 100.0,
+      "render_spend_usd": 3.6,
+      "tier_mix": {
+        "connective": 0,
+        "hero": 6,
+        "kenburns": 0
+      }
+    }
+  },
+  "desired_tiers": {
+    "L1": "connective",
+    "L2": "connective",
+    "L3": "connective",
+    "L4": "connective",
+    "L5": "connective",
+    "L6": "connective"
+  },
+  "expected_beats": 3,
+  "expected_shots": 6,
+  "incident_id": "ladder",
+  "planted_qc_rejections_at_4": []
+}
