@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<!--
+  ══════════════════════════════════════════════════════════════════
+  FORESHADOW — 10-slide pitch deck (single self-contained HTML file)
+  ══════════════════════════════════════════════════════════════════
+  NAVIGATION
+    → / PageDown / Space ... next slide
+    ← / PageUp ............. previous slide
+    ESC .................... toggle slide-overview grid (click to jump)
+    P ...................... presenter mode (speaker notes, bottom 20%)
+    C ...................... contrast debug (thin border on text elements)
+  PRINT TO PDF
+    Cmd+P / Ctrl+P → destination "Save as PDF" → Landscape →
+    margins None → background graphics ON → clean 10-page 16:9 deck.
+  SWAPPING PLACEHOLDERS
+    Search for "SWAP:" comments — only the QR code placeholder remains;
+    all product shots are real committed assets (../readme-hero.png,
+    ../og-image.png, ../icon.svg).
+  REBRAND
+    Edit the CSS variables in :root at the top of <style>.
+  ══════════════════════════════════════════════════════════════════
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foreshadow — Pitch Deck</title>
+  <meta name="description" content="10-slide pitch deck for Foreshadow: an agent film crew that turns near-miss incident reports into budget-governed, provenance-signed cinematic safety films. Built for the Global AI Hackathon with Qwen Cloud." />
+  <link rel="canonical" href="https://foreshadow.edycu.dev/pitch/" />
+  <meta name="theme-color" content="#0E1116" />
+  <meta property="og:title" content="Foreshadow — Pitch Deck" />
+  <meta property="og:description" content="Your near-miss, tomorrow's safety film. $2.71 a film, not $15,000 — 10 slides for the Global AI Hackathon with Qwen Cloud." />
+  <meta property="og:url" content="https://foreshadow.edycu.dev/pitch/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Foreshadow" />
+  <meta property="og:image" content="https://foreshadow.edycu.dev/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Foreshadow — Pitch Deck" />
+  <meta name="twitter:description" content="Your near-miss, tomorrow's safety film. $2.71 a film, not $15,000." />
+  <meta name="twitter:image" content="https://foreshadow.edycu.dev/og-image.png" />
+  <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── rebrand in 30s: edit these ─────────────────────── */
+    :root {
+      --color-bg: #0E1116;
+      --color-bg-elevated: #171C24;
+      --color-primary: #F97316;   /* projector amber-orange */
+      --color-accent: #FBBF24;    /* ≤5% of pixels: judge-memorable items only */
+      --color-text: #F5F2EC;
+      --color-dim: #9AA3B2;
+      --color-ok: #34D399; --color-err: #F87171;
+      --border: rgba(245,242,236,.14);
+      --font-display: 'Fraunces', 'Iowan Old Style', Palatino, Georgia, serif;
+      --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); overflow: hidden; }
+    img { max-width: 100%; display: block; }
+
+    /* film grain */
+    body::after {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 400; opacity: .045;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ── 1920×1080 stage, scaled to fit (letterbox browser, never slide) ── */
+    #viewport { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+    #stage { width: 1920px; height: 1080px; position: relative; flex: none; transform-origin: center center; }
+
+    .slide {
+      position: absolute; inset: 0;
+      width: 1920px; height: 1080px;
+      padding: 110px 130px;
+      display: none;
+      background: var(--color-bg);
+      overflow: hidden;
+    }
+    .slide.active { display: block; }
+
+    .slide-kicker {
+      font-family: var(--font-mono); font-size: 20px; font-weight: 500;
+      letter-spacing: .24em; text-transform: uppercase; color: var(--color-accent);
+      margin-bottom: 26px;
+    }
+    h1, h2 { font-family: var(--font-display); letter-spacing: -.02em; }
+    .headline { font-size: 84px; font-weight: 900; line-height: 1.02; }
+    .subhead { font-size: 34px; color: var(--color-dim); font-weight: 500; line-height: 1.35; }
+    .body-lg { font-size: 24px; color: var(--color-dim); line-height: 1.55; }
+    .amber { color: transparent; background: linear-gradient(100deg, var(--color-accent), var(--color-primary)); -webkit-background-clip: text; background-clip: text; }
+    .mono { font-family: var(--font-mono); }
+    code { font-family: var(--font-mono); font-size: .85em; background: rgba(251,191,36,.09); color: var(--color-accent); padding: 2px 8px; border-radius: 6px; }
+
+    /* chrome */
+    #counter {
+      position: fixed; bottom: 26px; right: 34px; z-index: 300;
+      font-family: var(--font-mono); font-size: 14px; color: var(--color-dim); letter-spacing: .12em;
+    }
+    #hint {
+      position: fixed; bottom: 26px; left: 34px; z-index: 300;
+      font-family: var(--font-mono); font-size: 12px; color: rgba(154,163,178,.55); letter-spacing: .08em;
+    }
+    body.presenting #hint { display: none; }
+
+    /* speaker notes (presenter mode: P) */
+    .speaker-notes { display: none; }
+    #notes-panel {
+      position: fixed; left: 0; right: 0; bottom: 0; height: 20%;
+      background: rgba(11,14,19,.96); border-top: 2px solid var(--color-primary);
+      z-index: 350; padding: 22px 40px; display: none; overflow: auto;
+    }
+    #notes-panel .np-label { font-family: var(--font-mono); font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 8px; }
+    #notes-panel .np-text { font-size: 19px; line-height: 1.55; color: var(--color-text); max-width: 1400px; }
+    body.presenting #notes-panel { display: block; }
+    body.presenting #counter { opacity: .5; }
+    body.presenting.idle-cursor { cursor: none; }
+
+    /* overview grid (ESC) */
+    body.overview #viewport { display: none; }
+    #overview-grid {
+      display: none; position: fixed; inset: 0; z-index: 320;
+      background: var(--color-bg); overflow: auto;
+      padding: 48px; gap: 28px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+    body.overview #overview-grid { display: grid; }
+    .ov-cell { cursor: pointer; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; transition: border-color .15s, transform .15s; background: var(--color-bg-elevated); }
+    .ov-cell:hover { border-color: var(--color-primary); transform: scale(1.02); }
+    .ov-cell.current { border-color: var(--color-accent); box-shadow: 0 0 0 2px var(--color-accent); }
+    .ov-thumb { width: 100%; aspect-ratio: 16/9; overflow: hidden; position: relative; }
+    .ov-thumb .slide { display: block !important; position: absolute; top: 0; left: 0; transform: scale(calc(1/6)); transform-origin: top left; pointer-events: none; }
+    .ov-label { font-family: var(--font-mono); font-size: 12px; color: var(--color-dim); padding: 10px 14px; letter-spacing: .1em; }
+
+    /* Press C to toggle contrast debug mode:
+       thin border around text elements for projector-visibility checks */
+    body.debug-contrast .contrast-check,
+    body.debug-contrast h1, body.debug-contrast h2, body.debug-contrast h3,
+    body.debug-contrast p, body.debug-contrast li, body.debug-contrast td,
+    body.debug-contrast th, body.debug-contrast code, body.debug-contrast span {
+      outline: 1px solid rgba(96,165,250,.7);
+    }
+
+    /* frames */
+    .browser-frame { border-radius: 14px; overflow: hidden; border: 1px solid var(--border); background: var(--color-bg-elevated); box-shadow: 0 24px 70px rgba(0,0,0,.55); }
+    .browser-bar { display: flex; align-items: center; gap: 9px; padding: 13px 16px; background: #10141b; border-bottom: 1px solid var(--border); }
+    .b-dot { width: 13px; height: 13px; border-radius: 50%; }
+    .b-dot:nth-child(1) { background: #F87171; } .b-dot:nth-child(2) { background: #FBBF24; } .b-dot:nth-child(3) { background: #34D399; }
+    .b-url { flex: 1; margin-left: 10px; background: rgba(245,242,236,.06); border-radius: 7px; padding: 5px 14px; font-family: var(--font-mono); font-size: 13px; color: var(--color-dim); }
+    .terminal-frame { border-radius: 14px; overflow: hidden; border: 1px solid var(--border); background: #0B0E13; box-shadow: 0 24px 70px rgba(0,0,0,.55); }
+    .terminal-bar { padding: 12px 16px; background: #10141b; border-bottom: 1px solid var(--border); font-family: var(--font-mono); font-size: 13px; color: var(--color-dim); }
+    .terminal-body { padding: 22px 26px; font-family: var(--font-mono); font-size: 17px; line-height: 1.75; color: #C9D1DC; white-space: pre; overflow: hidden; }
+    .t-cmd { color: var(--color-text); font-weight: 700; }
+    .t-dim { color: #6B7484; } .t-ok { color: var(--color-ok); } .t-amber { color: var(--color-accent); } .t-err { color: var(--color-err); }
+
+    .cursor { display: inline-block; width: 11px; height: 22px; background: var(--color-accent); vertical-align: -3px; animation: blink 1.05s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* callout circles */
+    .callout {
+      position: absolute; width: 44px; height: 44px; border-radius: 50%;
+      background: var(--color-primary); color: #0E1116;
+      font-family: var(--font-mono); font-weight: 700; font-size: 20px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 0 5px rgba(249,115,22,.28), 0 6px 18px rgba(0,0,0,.5);
+      z-index: 5;
+    }
+    .callout-label { position: absolute; font-family: var(--font-mono); font-size: 15px; color: var(--color-text); background: rgba(11,14,19,.92); border: 1px solid var(--border); border-radius: 8px; padding: 7px 14px; z-index: 5; white-space: nowrap; }
+
+    /* stat chips */
+    .chip-row { display: flex; gap: 18px; flex-wrap: wrap; }
+    .chip {
+      font-family: var(--font-mono); font-size: 17px; color: var(--color-text);
+      border: 1px solid var(--border); border-radius: 999px; padding: 10px 22px;
+      background: var(--color-bg-elevated);
+    }
+    .chip b { color: var(--color-accent); font-weight: 700; }
+
+    /* ══ print to PDF ══ */
+    @page { size: 16in 9in landscape; margin: 0; }
+    @media print {
+      html, body { overflow: visible; height: auto; background: var(--color-bg); }
+      html, body, .slide { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      body::after { display: none; }
+      #viewport { position: static; display: block; }
+      #stage { width: 1920px; height: auto; transform: none !important; }
+      .slide { display: block !important; position: relative; page-break-inside: avoid; break-inside: avoid; page-break-after: always; }
+      #counter, #hint, #notes-panel, #overview-grid, .speaker-notes { display: none !important; }
+      .cursor { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="viewport"><div id="stage">
+
+  <!-- ════════ SLIDE 1 · COVER ════════ -->
+  <section class="slide active" data-title="Cover">
+    <div style="position:absolute; inset:0; background: radial-gradient(ellipse 52% 46% at 68% 18%, rgba(249,115,22,.17), transparent 65%); pointer-events:none;"></div>
+    <div style="display:flex; height:100%; gap:90px; align-items:center; position:relative;">
+      <div style="flex:1.15;">
+        <div style="display:inline-flex; align-items:center; gap:12px; border:1px solid var(--border); border-radius:999px; padding:10px 24px; font-family:var(--font-mono); font-size:16px; color:var(--color-dim); margin-bottom:44px;">
+          <span style="width:9px; height:9px; border-radius:50%; background:var(--color-primary); box-shadow:0 0 12px rgba(249,115,22,.7);"></span>
+          Built for the Global AI Hackathon with Qwen Cloud · Track 2
+        </div>
+        <div style="display:flex; align-items:center; gap:26px; margin-bottom:30px;">
+          <img src="../icon.svg" alt="Foreshadow icon" style="width:96px; height:96px;" />
+          <h1 style="font-size:118px; font-weight:900; line-height:1;">Foreshadow</h1>
+        </div>
+        <p class="subhead" style="max-width:760px; color:var(--color-text); font-size:38px;">Your near-miss, tomorrow's <span class="amber" style="font-family:var(--font-display); font-weight:700;">safety film</span>.</p>
+        <p class="body-lg" style="margin-top:26px; max-width:700px;">An agent film crew that turns real incident reports into 90-second cinematic safety films — budgeted, QC'd, provenance-signed.</p>
+      </div>
+      <div style="flex:.85;">
+        <!-- cover animation: typing terminal line, 3-5s loop then rests -->
+        <div class="terminal-frame">
+          <div class="terminal-bar">zsh — foreshadow</div>
+          <div class="terminal-body"><span class="t-dim">$</span> <span class="t-cmd" id="typeLine"></span><span class="cursor"></span>
+<span class="t-dim">replaying forklift at $4 (offline, zero keys)</span>
+<span class="t-amber">spent $2.7051 of $4.00</span>
+invariants <span class="t-ok">I1-I4 PASS</span></div>
+        </div>
+        <p style="font-family:var(--font-mono); font-size:15px; color:var(--color-dim); margin-top:18px; text-align:right;">Edy Cu · foreshadow.edycu.dev</p>
+      </div>
+    </div>
+    <aside class="speaker-notes">This is Foreshadow — an AI Showrunner that treats a company's own incident log as a screenplay archive. Everything you'll see runs offline with zero API keys; the terminal on the right is the real CLI output. One sentence to remember: your near-miss becomes tomorrow's safety film.</aside>
+  </section>
+
+  <!-- ════════ SLIDE 2 · HOOK ════════ -->
+  <section class="slide" data-title="Hook">
+    <div style="display:flex; flex-direction:column; justify-content:center; height:100%;">
+      <p class="slide-kicker">The ledger line</p>
+      <h2 style="font-size:180px; font-weight:900; line-height:1; letter-spacing:-.03em;"><span class="amber">$2.71</span> <span style="color:var(--color-dim); font-weight:400; font-size:110px;">vs</span> $15,000</h2>
+      <p class="subhead" style="margin-top:42px; max-width:1100px;">One safety film, made by an agent crew under a hard budget — versus a conventional production quote and a 6–8 week wait. That $2.71 is the real ledger total for <span class="mono" style="font-size:26px;">forklift@$4</span>, not a slogan.</p>
+    </div>
+    <aside class="speaker-notes">Pause on this number. $2.71 is not marketing — it's the actual cost ledger total printed by the pipeline for the forklift incident at a four-dollar budget. A commissioned safety video costs five to fifteen thousand dollars and takes weeks. That gap is the whole company.</aside>
+  </section>
+
+  <!-- ════════ SLIDE 3 · PROBLEM ════════ -->
+  <section class="slide" data-title="Problem">
+    <div style="display:flex; height:100%; gap:100px; align-items:center;">
+      <div style="flex:1.2;">
+        <p class="slide-kicker">The problem</p>
+        <h2 class="headline" style="margin-bottom:40px;">Nobody watches the 2009 training video.</h2>
+        <p class="body-lg" style="max-width:720px;">A warehouse safety manager files the <strong style="color:var(--color-text);">third forklift near-miss this quarter</strong>. Corporate's answer is a stock actor in a stock warehouse. The next one won't be a near-miss.</p>
+      </div>
+      <div style="flex:.8; border-left:2px solid var(--border); padding-left:70px;">
+        <div style="margin-bottom:52px;">
+          <div style="font-family:var(--font-display); font-size:72px; font-weight:900; color:var(--color-text);">$5–15k</div>
+          <div class="body-lg">per commissioned safety video</div>
+        </div>
+        <div style="margin-bottom:52px;">
+          <div style="font-family:var(--font-display); font-size:72px; font-weight:900; color:var(--color-text);">6–8 wks</div>
+          <div class="body-lg">turnaround — the incident is stale by then</div>
+        </div>
+        <div>
+          <div style="font-family:var(--font-display); font-size:72px; font-weight:900; color:var(--color-err);">0</div>
+          <div class="body-lg">films made from the company's <em>own</em> incidents</div>
+        </div>
+      </div>
+    </div>
+    <aside class="speaker-notes">The pain is specific: safety teams sit on a goldmine of real near-miss reports, but the training content is generic, expensive, and slow. A near-miss is the accident's foreshadowing — and foreshadowing is a narrative device. Nobody is turning one into the other.</aside>
+  </section>
+
+  <!-- ════════ SLIDE 4 · SOLUTION ════════ -->
+  <section class="slide" data-title="Solution">
+    <div style="display:flex; height:100%; gap:80px; align-items:center;">
+      <div style="flex:.9;">
+        <p class="slide-kicker">The solution</p>
+        <h2 class="headline" style="font-size:72px; margin-bottom:36px;">Drop in Tuesday's report. Screen it Thursday.</h2>
+        <p class="body-lg" style="max-width:640px;">A crew of Qwen agents — Screenwriter, Line Producer, Art Department, DP, QC Critic, Narrator — makes the film from <em>your</em> incident, under a hard dollar budget, and signs the receipts.</p>
+        <div class="chip-row" style="margin-top:44px;">
+          <span class="chip"><b>8</b> Qwen surfaces</span>
+          <span class="chip"><b>1</b> bill</span>
+          <span class="chip"><b>90s</b> film</span>
+        </div>
+      </div>
+      <div style="flex:1.1;">
+        <div class="browser-frame">
+          <div class="browser-bar"><span class="b-dot"></span><span class="b-dot"></span><span class="b-dot"></span><span class="b-url">foreshadow.edycu.dev</span></div>
+          <img src="../readme-hero.png" alt="Foreshadow hero — your near-miss, tomorrow's safety film" />
+        </div>
+      </div>
+    </div>
+    <aside class="speaker-notes">One sentence: Foreshadow is an agent film studio for the incident reports you already have. The crew metaphor is literal — each agent has a film-set job, and the Line Producer holds the wallet. Point at the hero image: this is the committed brand asset, same one on the repo README.</aside>
+  </section>
+
+  <!-- ════════ SLIDE 5 · HOW IT WORKS ════════ -->
+  <section class="slide" data-title="Architecture">
+    <p class="slide-kicker">How it works</p>
+    <h2 class="headline" style="font-size:64px; margin-bottom:48px;">An 11-stage pipeline with a wallet in the middle.</h2>
+    <!-- doc-quality SVG architecture diagram -->
+    <svg viewBox="0 0 1660 560" style="width:100%; height:auto;" role="img" aria-label="Foreshadow architecture: CLI to pipeline stages to Qwen transport to signed manifest">
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0L10 5L0 10z" fill="#9AA3B2"/>
+        </marker>
+        <linearGradient id="amberg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#FBBF24"/><stop offset="1" stop-color="#F97316"/>
+        </linearGradient>
+      </defs>
+      <style>
+        .box { fill: #171C24; stroke: rgba(245,242,236,.16); rx: 12; }
+        .box-hot { fill: rgba(249,115,22,.12); stroke: #F97316; stroke-width: 2; }
+        .lbl { font-family: 'JetBrains Mono', monospace; font-size: 19px; fill: #F5F2EC; }
+        .sub { font-family: 'JetBrains Mono', monospace; font-size: 14px; fill: #9AA3B2; }
+        .flow { stroke: #9AA3B2; stroke-width: 2; fill: none; marker-end: url(#arr); }
+      </style>
+      <!-- CLI -->
+      <rect class="box" x="10" y="230" width="200" height="100" rx="12"/>
+      <text class="lbl" x="110" y="272" text-anchor="middle">foreshadow</text>
+      <text class="sub" x="110" y="300" text-anchor="middle">render · replay · verify</text>
+      <path class="flow" d="M210 280 H265"/>
+      <!-- pipeline group -->
+      <rect x="270" y="70" width="880" height="420" rx="16" fill="none" stroke="rgba(245,242,236,.12)" stroke-dasharray="6 6"/>
+      <text class="sub" x="290" y="102">pipeline worker — Python 3.12 · SQLite · fixtures/cache</text>
+      <!-- stages row 1 -->
+      <rect class="box" x="300" y="140" width="180" height="86" rx="12"/>
+      <text class="lbl" x="390" y="176" text-anchor="middle">ingest</text>
+      <text class="sub" x="390" y="202" text-anchor="middle">ECIES seal</text>
+      <rect class="box" x="520" y="140" width="180" height="86" rx="12"/>
+      <text class="lbl" x="610" y="176" text-anchor="middle">screenplay</text>
+      <text class="sub" x="610" y="202" text-anchor="middle">shot plan</text>
+      <rect class="box box-hot" x="740" y="140" width="200" height="86" rx="12"/>
+      <text class="lbl" x="840" y="170" text-anchor="middle" fill="#FBBF24">Line Producer</text>
+      <text class="sub" x="840" y="196" text-anchor="middle">knapsack + kill switch</text>
+      <rect class="box" x="980" y="140" width="140" height="86" rx="12"/>
+      <text class="lbl" x="1050" y="176" text-anchor="middle">render</text>
+      <text class="sub" x="1050" y="202" text-anchor="middle">3 tiers</text>
+      <path class="flow" d="M480 183 H515"/>
+      <path class="flow" d="M700 183 H735"/>
+      <path class="flow" d="M940 183 H975"/>
+      <!-- stages row 2 -->
+      <rect class="box" x="980" y="330" width="140" height="86" rx="12"/>
+      <text class="lbl" x="1050" y="366" text-anchor="middle">QC</text>
+      <text class="sub" x="1050" y="392" text-anchor="middle">≤1 retry/demote</text>
+      <rect class="box" x="740" y="330" width="200" height="86" rx="12"/>
+      <text class="lbl" x="840" y="366" text-anchor="middle">stitch</text>
+      <text class="sub" x="840" y="392" text-anchor="middle">edit list</text>
+      <rect class="box" x="520" y="330" width="180" height="86" rx="12"/>
+      <text class="lbl" x="610" y="366" text-anchor="middle">publish</text>
+      <text class="sub" x="610" y="392" text-anchor="middle">sign manifest</text>
+      <path class="flow" d="M1050 226 V325"/>
+      <path class="flow" d="M975 373 H945"/>
+      <path class="flow" d="M735 373 H705"/>
+      <!-- transport -->
+      <rect class="box" x="1230" y="120" width="400" height="120" rx="12"/>
+      <text class="lbl" x="1430" y="163" text-anchor="middle">FakeQwen (default)</text>
+      <text class="sub" x="1430" y="192" text-anchor="middle">deterministic · offline · zero keys</text>
+      <rect class="box" x="1230" y="270" width="400" height="140" rx="12"/>
+      <text class="lbl" x="1430" y="308" text-anchor="middle">LiveQwen — DASHSCOPE_API_KEY</text>
+      <text class="sub" x="1430" y="336" text-anchor="middle">qwen3.7-max · qwen-image-2.0-pro</text>
+      <text class="sub" x="1430" y="360" text-anchor="middle">wan2.7-i2v · qwen3-vl-plus · cosyvoice</text>
+      <path class="flow" d="M1150 220 H1225" stroke-dasharray="5 5"/>
+      <path class="flow" d="M1150 320 H1225" stroke-dasharray="5 5"/>
+      <!-- output -->
+      <rect x="300" y="330" width="180" height="86" rx="12" fill="rgba(251,191,36,.1)" stroke="url(#amberg)" stroke-width="2"/>
+      <text class="lbl" x="390" y="362" text-anchor="middle" fill="#FBBF24">Ed25519</text>
+      <text class="sub" x="390" y="390" text-anchor="middle">Merkle manifest</text>
+      <path class="flow" d="M515 373 H485"/>
+      <text class="sub" x="390" y="452" text-anchor="middle">verify: I1–I4 · 1-byte tamper fails</text>
+    </svg>
+    <aside class="speaker-notes">Walk left to right: CLI drives an eleven-stage pipeline; the Line Producer sits in the middle holding the budget. Everything talks to Qwen through one transport seam — FakeQwen for the deterministic offline demo, LiveQwen behind a key. Output is an Ed25519-signed Merkle manifest with four tested invariants.</aside>
+  </section>
+
+  <!-- ════════ SLIDE 6 · LIVE DEMO ════════ -->
+  <section class="slide" data-title="Demo">
+    <p class="slide-kicker">Live demo — real CLI output</p>
+    <h2 class="headline" style="font-size:60px; margin-bottom:40px;">Replay, then try to tamper with it.</h2>
+    <div style="display:flex; gap:50px; position:relative;">
+      <div style="flex:1.15; position:relative;">
+        <div class="callout" style="top:-22px; left:-22px;">1</div>
+        <div class="callout-label" style="top:-16px; left:36px;">one command, zero keys</div>
+        <div class="terminal-frame">
+          <div class="terminal-bar">foreshadow replay --incident forklift</div>
+          <div class="terminal-body" style="font-size:16.5px;"><span class="t-dim">$</span> <span class="t-cmd">foreshadow replay --incident forklift</span>
+  [<span class="t-ok">  done</span>] screenplay   <span class="t-dim">(beats=3, title=Aisle Seven)</span>
+  [<span class="t-ok">  done</span>] budget_alloc <span class="t-dim">(mix=hero:3 conn:3 kb:2)</span>
+  [<span class="t-ok">  done</span>] qc           <span class="t-dim">(rejected=0, reviewed=6)</span>
+  [<span class="t-ok">  done</span>] publish      <span class="t-dim">(leaves=36)</span>
+
+  <span class="t-amber">spent $2.7051 of $4.00</span>
+  <span class="t-dim">merkle root 4a7e3aa0bd296923…</span>
+  invariants <span class="t-ok">I1-I4 PASS</span>
+  <span class="t-ok">committed cache: byte-identical</span></div>
+        </div>
+      </div>
+      <div style="flex:1; position:relative;">
+        <div class="callout" style="top:-22px; left:-22px;">2</div>
+        <div class="callout-label" style="top:-16px; left:36px;">cryptographic verify — tamper 1 byte, it fails</div>
+        <div class="terminal-frame">
+          <div class="terminal-bar">foreshadow verify film.mp4 manifest.json</div>
+          <div class="terminal-body" style="font-size:16.5px;">  [<span class="t-ok">PASS</span>] signature      <span class="t-dim">Ed25519 544aa661…</span>
+  [<span class="t-ok">PASS</span>] merkle_root    <span class="t-dim">recomputed 4a7e3aa0…</span>
+  [<span class="t-ok">PASS</span>] I4 <span class="t-dim">36 artifact hashes re-verified</span>
+  [<span class="t-ok">PASS</span>] I2 <span class="t-dim">spent $2.71 &lt;= budget $4.00</span>
+  [<span class="t-ok">PASS</span>] I3 <span class="t-dim">rejected clips outside the cut</span>
+<span class="t-ok">VERIFICATION PASS</span>
+
+<span class="t-dim"># flip one byte of any artifact:</span>
+  [<span class="t-err">FAIL</span>] I4_artifact_hashes → <span class="t-err">exit 1</span></div>
+        </div>
+        <div class="callout" style="bottom:-20px; right:-14px;">3</div>
+        <div class="callout-label" style="bottom:-14px; right:44px;">QC rejection: chemical shot C4, 1 retry, excluded from cut</div>
+      </div>
+    </div>
+    <aside class="speaker-notes">These are verbatim outputs from DEMO.md. Callout one: the full replay, offline. Callout two: the verify command re-hashes 36 artifacts and checks the signature — flip a single byte and it exits 1. Callout three: in the chemical incident the VL critic rejects a shot missing its PPE elements, and invariant I3 proves the rejected clip never reaches the cut.</aside>
+  </section>
+
+  <!-- ════════ SLIDE 7 · KEY FEATURES ════════ -->
+  <section class="slide" data-title="Features">
+    <p class="slide-kicker">Key features</p>
+    <h2 class="headline" style="font-size:60px; margin-bottom:44px;">The budget is the product.</h2>
+    <div style="display:grid; grid-template-columns: 1.5fr 1fr; grid-template-rows: auto auto; gap:26px;">
+      <div style="grid-row: span 2; background:var(--color-bg-elevated); border:1px solid rgba(249,115,22,.45); border-radius:18px; padding:40px;">
+        <h3 style="font-family:var(--font-display); font-size:36px; margin-bottom:16px;">Line Producer <span class="amber">knapsack allocator</span></h3>
+        <p class="body-lg" style="font-size:22px;">Tiers every shot by narrative weight × cost, logs every demotion as priced regret, kill-switch at 2.5× budget.</p>
+        <table style="margin-top:30px; border-collapse:collapse; font-family:var(--font-mono); font-size:19px; width:100%;">
+          <tr style="color:var(--color-dim); font-size:15px; text-align:left;"><th style="padding:8px 14px;">budget</th><th style="padding:8px 14px;">hero</th><th style="padding:8px 14px;">film $</th><th style="padding:8px 14px;">quality</th></tr>
+          <tr style="border-top:1px solid var(--border);"><td style="padding:8px 14px;">$2</td><td style="padding:8px 14px;">1</td><td style="padding:8px 14px;">$1.32</td><td style="padding:8px 14px;">49.8%</td></tr>
+          <tr style="border-top:1px solid var(--border);"><td style="padding:8px 14px;">$4</td><td style="padding:8px 14px;">3</td><td style="padding:8px 14px;">$2.71</td><td style="padding:8px 14px; color:var(--color-accent);">78.4%</td></tr>
+          <tr style="border-top:1px solid var(--border);"><td style="padding:8px 14px;">$8</td><td style="padding:8px 14px;">6</td><td style="padding:8px 14px;">$3.31</td><td style="padding:8px 14px;">92.0%</td></tr>
+        </table>
+        <p style="font-family:var(--font-mono); font-size:14px; color:var(--color-dim); margin-top:14px;">forklift sweep · docs/BENCH.md · reproduce: foreshadow bench</p>
+      </div>
+      <div style="background:var(--color-bg-elevated); border:1px solid var(--border); border-radius:18px; padding:32px;">
+        <h3 style="font-family:var(--font-display); font-size:28px; margin-bottom:10px;">Ed25519 + Merkle provenance</h3>
+        <p class="body-lg" style="font-size:20px;">Safety films become evidence — every artifact hash rolls into a signed root; invariants I1–I4 are tested, including 1-byte tamper.</p>
+      </div>
+      <div style="background:var(--color-bg-elevated); border:1px solid var(--border); border-radius:18px; padding:32px;">
+        <h3 style="font-family:var(--font-display); font-size:28px; margin-bottom:10px;">Grounded QC loop</h3>
+        <p class="body-lg" style="font-size:20px;">A VL critic rejects shots that miss their safety intent — one corrective retry, or demote; rejected clips provably never reach the cut.</p>
+      </div>
+    </div>
+    <aside class="speaker-notes">The left card is the judge-memorable one: the allocator visibly does something. Quality climbs 49.8 to 92 percent as budget rises, and those numbers come from the committed bench sweep, reproducible offline. Right side: provenance because safety films become evidence, and a QC loop that's grounded, not cosmetic.</aside>
+  </section>
+
+  <!-- ════════ SLIDE 8 · WHY NOW / WHY QWEN ════════ -->
+  <section class="slide" data-title="Why Qwen">
+    <div style="display:flex; height:100%; gap:90px; align-items:center;">
+      <div style="flex:1;">
+        <p class="slide-kicker">Why only Qwen Cloud</p>
+        <h2 class="headline" style="font-size:64px; margin-bottom:36px;">Take Qwen out and the demo dies.</h2>
+        <p class="body-lg" style="max-width:620px;">Without one platform, this is <strong style="color:var(--color-text);">four vendors, an async render queue, and a cross-vendor cost normalizer</strong> — and the single-bill ledger that <em>is</em> the demo becomes impossible.</p>
+        <p class="body-lg" style="max-width:620px; margin-top:22px;">Track 2 asks for quality under a limited budget. We made the constraint the signature feature.</p>
+      </div>
+      <div style="flex:1;">
+        <table style="border-collapse:collapse; width:100%; font-size:20px;">
+          <tr style="font-family:var(--font-mono); font-size:14px; color:var(--color-dim); text-align:left; text-transform:uppercase; letter-spacing:.1em;">
+            <th style="padding:12px 16px;">Qwen surface</th><th style="padding:12px 16px;">Without it</th>
+          </tr>
+          <tr style="border-top:1px solid var(--border);"><td style="padding:12px 16px;"><code>qwen3.7-max</code> + thinking</td><td style="padding:12px 16px; color:var(--color-dim);">second LLM vendor</td></tr>
+          <tr style="border-top:1px solid var(--border);"><td style="padding:12px 16px;"><code>qwen-image-2.0-pro</code></td><td style="padding:12px 16px; color:var(--color-dim);">Midjourney account + style hacks</td></tr>
+          <tr style="border-top:1px solid var(--border);"><td style="padding:12px 16px;"><code>wan2.7-i2v</code> / <code>wan2.6-flash</code></td><td style="padding:12px 16px; color:var(--color-dim);">Runway + no cheap tier = no ladder</td></tr>
+          <tr style="border-top:1px solid var(--border);"><td style="padding:12px 16px;"><code>qwen3-vl-plus</code> QC</td><td style="padding:12px 16px; color:var(--color-dim);">a GPT-V-class vendor just for review</td></tr>
+          <tr style="border-top:1px solid var(--border);"><td style="padding:12px 16px;"><code>cosyvoice-v3-plus</code></td><td style="padding:12px 16px; color:var(--color-dim);">an ElevenLabs subscription</td></tr>
+          <tr style="border-top:1px solid var(--border);"><td style="padding:12px 16px;">Batch API <b style="color:var(--color-accent);">−50%</b></td><td style="padding:12px 16px; color:var(--color-dim);">fan-out costs 2×</td></tr>
+        </table>
+      </div>
+    </div>
+    <aside class="speaker-notes">This is the moat argument: eight distinct Qwen surfaces, one bill. The budget-ladder pitch specifically needs two real video price tiers — hero and flash — which most stacks don't have. All model ids are pinned in config.ALLOWED_MODELS; anything else raises before a call is built.</aside>
+  </section>
+
+  <!-- ════════ SLIDE 9 · TRACTION / SHIPPED ════════ -->
+  <section class="slide" data-title="Shipped">
+    <p class="slide-kicker">Shipped — built solo in six days</p>
+    <h2 class="headline" style="font-size:64px; margin-bottom:48px;">Everything claimed is green. Offline.</h2>
+    <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:24px; margin-bottom:44px;">
+      <div style="background:var(--color-bg-elevated); border:1px solid var(--border); border-radius:16px; padding:34px 28px;">
+        <div style="font-family:var(--font-display); font-size:66px; font-weight:900; color:var(--color-accent);">418</div>
+        <div class="body-lg" style="font-size:20px;">tests passing</div>
+      </div>
+      <div style="background:var(--color-bg-elevated); border:1px solid var(--border); border-radius:16px; padding:34px 28px;">
+        <div style="font-family:var(--font-display); font-size:66px; font-weight:900; color:var(--color-accent);">100%</div>
+        <div class="body-lg" style="font-size:20px;">line coverage, socket-guarded</div>
+      </div>
+      <div style="background:var(--color-bg-elevated); border:1px solid var(--border); border-radius:16px; padding:34px 28px;">
+        <div style="font-family:var(--font-display); font-size:66px; font-weight:900; color:var(--color-accent);">36</div>
+        <div class="body-lg" style="font-size:20px;">signed Merkle leaves per film</div>
+      </div>
+      <div style="background:var(--color-bg-elevated); border:1px solid var(--border); border-radius:16px; padding:34px 28px;">
+        <div style="font-family:var(--font-display); font-size:66px; font-weight:900; color:var(--color-accent);">3</div>
+        <div class="body-lg" style="font-size:20px;">seed incidents, byte-identical replay</div>
+      </div>
+    </div>
+    <div class="chip-row">
+      <span class="chip">5-stage CI: quality → security → build → offline verify → gate</span>
+      <span class="chip">CodeQL + TruffleHog + pip-audit</span>
+      <span class="chip">bench sweep $2/$4/$8 committed</span>
+      <span class="chip">playable offline animatic (<b>preview</b>)</span>
+    </div>
+    <p style="margin-top:40px; font-family:var(--font-mono); font-size:16px; color:var(--color-dim);">Honest scope: graded artifact runs on deterministic FakeQwen; live image/video/TTS surfaces are payload-complete behind DASHSCOPE_API_KEY. Function Compute handler written, not yet deployed. It says so in the README.</p>
+    <aside class="speaker-notes">No invented users — this is a hackathon build and the traction is engineering receipts: 418 tests at 100 percent coverage running fully offline, deterministic replay across three seed incidents, and a five-stage CI pipeline. And note the honesty line at the bottom — the README discloses exactly what's mocked versus real.</aside>
+  </section>
+
+  <!-- ════════ SLIDE 10 · THE ASK ════════ -->
+  <section class="slide" data-title="The Ask">
+    <div style="position:absolute; inset:0; background: radial-gradient(ellipse 55% 50% at 50% 105%, rgba(249,115,22,.16), transparent 70%); pointer-events:none;"></div>
+    <div style="display:flex; height:100%; gap:90px; align-items:center; position:relative;">
+      <div style="flex:1.25;">
+        <p class="slide-kicker">The ask</p>
+        <h2 class="headline" style="font-size:72px; margin-bottom:36px;">Run the replay. Try to break the signature.</h2>
+        <p class="body-lg" style="max-width:680px; margin-bottom:36px;">Two minutes, zero keys, zero network. If one byte is wrong, it will tell you.</p>
+        <div class="terminal-frame" style="max-width:760px;">
+          <div class="terminal-bar">judge path — offline</div>
+          <div class="terminal-body" style="font-size:17px;"><span class="t-dim">$</span> <span class="t-cmd">git clone https://github.com/edycutjong/foreshadow</span>
+<span class="t-dim">$</span> <span class="t-cmd">./.venv/bin/pytest</span>            <span class="t-dim"># 418 passed</span>
+<span class="t-dim">$</span> <span class="t-cmd">foreshadow replay --incident forklift</span></div>
+        </div>
+        <p style="margin-top:34px; font-size:22px; color:var(--color-dim);">
+          <span style="color:var(--color-text); font-weight:700;">foreshadow.edycu.dev</span> · github.com/edycutjong/foreshadow · Edy Cu
+        </p>
+      </div>
+      <div style="flex:.6; display:flex; flex-direction:column; align-items:center; gap:26px;">
+        <!-- SWAP: replace with qr-repo.png (QR → https://github.com/edycutjong/foreshadow) -->
+        <img src="https://placehold.co/300x300/171C24/FBBF24?text=QR+%E2%86%92+repo" alt="QR code placeholder linking to the Foreshadow repository" width="300" height="300" style="border-radius:18px; border:1px solid var(--border);" />
+        <div style="display:flex; align-items:center; gap:16px;">
+          <div style="width:64px; height:64px; border-radius:50%; background:linear-gradient(120deg, var(--color-accent), var(--color-primary)); display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:900; font-size:24px; color:#0E1116;">EC</div>
+          <div>
+            <div style="font-weight:800; font-size:20px;">Edy Cu</div>
+            <div style="color:var(--color-dim); font-size:16px;">solo builder · design → crypto → CI</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <aside class="speaker-notes">The ask is an invitation, not a favor: clone it and try to break it. The whole judge path is offline and takes about two minutes. Closer line: a near-miss is the accident's foreshadowing — Foreshadow just turns one into the other, for $2.71.</aside>
+  </section>
+
+</div></div>
+
+<!-- overview grid (ESC) -->
+<div id="overview-grid" role="listbox" aria-label="Slide overview"></div>
+
+<!-- presenter notes panel (P) -->
+<div id="notes-panel" aria-live="polite">
+  <div class="np-label">Speaker notes</div>
+  <div class="np-text" id="notes-text"></div>
+</div>
+
+<div id="counter" aria-live="polite">01 / 10</div>
+<div id="hint">←/→ nav · ESC grid · P notes · C contrast · Cmd+P → PDF</div>
+
+<script>
+(function () {
+  var slides = Array.prototype.slice.call(document.querySelectorAll('#stage > .slide'));
+  var current = 0;
+  var counter = document.getElementById('counter');
+  var notesText = document.getElementById('notes-text');
+  var stage = document.getElementById('stage');
+  var body = document.body;
+
+  /* scale 1920×1080 stage to fit the viewport — letterbox the browser, never the slide */
+  function fit() {
+    var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    stage.style.transform = 'scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit); fit();
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function show(i) {
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach(function (sl, idx) { sl.classList.toggle('active', idx === current); });
+    counter.textContent = pad(current + 1) + ' / ' + pad(slides.length);
+    var notes = slides[current].querySelector('.speaker-notes');
+    notesText.textContent = notes ? notes.textContent : '';
+    if (body.classList.contains('overview')) buildOverviewHighlight();
+  }
+
+  /* overview grid: clone slides as thumbnails */
+  var grid = document.getElementById('overview-grid');
+  var built = false;
+  function buildOverview() {
+    if (built) return; built = true;
+    slides.forEach(function (sl, idx) {
+      var cell = document.createElement('div');
+      cell.className = 'ov-cell'; cell.setAttribute('role', 'option'); cell.dataset.idx = idx;
+      var thumb = document.createElement('div');
+      thumb.className = 'ov-thumb';
+      var clone = sl.cloneNode(true);
+      clone.classList.add('active');
+      thumb.appendChild(clone);
+      var label = document.createElement('div');
+      label.className = 'ov-label';
+      label.textContent = pad(idx + 1) + ' · ' + (sl.dataset.title || '');
+      cell.appendChild(thumb); cell.appendChild(label);
+      cell.addEventListener('click', function () {
+        body.classList.remove('overview');
+        show(idx);
+      });
+      grid.appendChild(cell);
+    });
+  }
+  function buildOverviewHighlight() {
+    grid.querySelectorAll('.ov-cell').forEach(function (c) {
+      c.classList.toggle('current', parseInt(c.dataset.idx, 10) === current);
+    });
+  }
+  function toggleOverview() {
+    buildOverview();
+    body.classList.toggle('overview');
+    buildOverviewHighlight();
+  }
+
+  /* presenter idle-cursor */
+  var idleTimer;
+  function pokeCursor() {
+    body.classList.remove('idle-cursor');
+    clearTimeout(idleTimer);
+    if (body.classList.contains('presenting')) {
+      idleTimer = setTimeout(function () { body.classList.add('idle-cursor'); }, 2000);
+    }
+  }
+  document.addEventListener('mousemove', pokeCursor);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(current - 1); }
+    else if (e.key === 'Escape') { toggleOverview(); }
+    else if (e.key === 'p' || e.key === 'P') { body.classList.toggle('presenting'); pokeCursor(); }
+    else if (e.key === 'c' || e.key === 'C') { body.classList.toggle('debug-contrast'); }
+    else if (e.key === 'Home') { show(0); }
+    else if (e.key === 'End') { show(slides.length - 1); }
+  });
+
+  /* click / touch advance */
+  document.getElementById('viewport').addEventListener('click', function (e) {
+    if (e.target.closest('a')) return;
+    show(current + 1);
+  });
+  var touchX = null;
+  document.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', function (e) {
+    if (touchX === null) return;
+    var dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 48) show(current + (dx < 0 ? 1 : -1));
+    touchX = null;
+  }, { passive: true });
+
+  /* cover typing loop: 3-5s, then rests */
+  var typeEl = document.getElementById('typeLine');
+  var cmd = 'foreshadow replay --incident forklift';
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) { typeEl.textContent = cmd; }
+  else {
+    var ti = 0;
+    (function type() {
+      if (ti <= cmd.length) { typeEl.textContent = cmd.slice(0, ti); ti++; setTimeout(type, 62); }
+    })();
+  }
+
+  show(0);
+})();
+</script>
+</body>
+</html>

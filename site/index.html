@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foreshadow — Your near-miss, tomorrow's safety film</title>
+  <meta name="description" content="An agent film crew that turns real near-miss incident reports into 90-second cinematic safety films — budget-governed by a Line Producer agent, QC'd, and Ed25519 provenance-signed. $2.71 a film, not $15,000." />
+  <link rel="canonical" href="https://foreshadow.edycu.dev/" />
+  <meta name="theme-color" content="#0E1116" />
+  <!-- OpenGraph -->
+  <meta property="og:title" content="Foreshadow — Your near-miss, tomorrow's safety film" />
+  <meta property="og:description" content="An agent film crew that turns real near-miss incident reports into 90-second cinematic safety films — budget-governed, QC'd, Ed25519 provenance-signed. $2.71 a film, not $15,000." />
+  <meta property="og:url" content="https://foreshadow.edycu.dev/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Foreshadow" />
+  <meta property="og:image" content="https://foreshadow.edycu.dev/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Foreshadow — Your near-miss, tomorrow's safety film" />
+  <meta name="twitter:description" content="An agent film crew that turns real near-miss incident reports into 90-second cinematic safety films — budget-governed, QC'd, Ed25519 provenance-signed." />
+  <meta name="twitter:image" content="https://foreshadow.edycu.dev/og-image.png" />
+  <!-- Icons -->
+  <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <!-- Fonts: Fraunces (display serif) + Manrope (body) + JetBrains Mono (code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ══════════════════════════════════════════════════════════
+       FORESHADOW — cinematic editorial landing
+       Palette from docs/assets/_tokens.css
+       ══════════════════════════════════════════════════════════ */
+    :root {
+      --bg: #0E1116;
+      --bg-elevated: #171C24;
+      --primary: #F97316;       /* projector amber-orange */
+      --accent: #FBBF24;        /* projector amber */
+      --text: #F5F2EC;
+      --text-dim: #9AA3B2;
+      --ok: #34D399; --warn: #FBBF24; --err: #F87171; --info: #60A5FA;
+      --border-glass: rgba(245, 242, 236, 0.14);
+      --panel-glass: rgba(23, 28, 36, 0.72);
+      --glow-primary: rgba(249, 115, 22, 0.55);
+      --glow-soft: rgba(249, 115, 22, 0.22);
+      --shadow-1: 0 2px 8px rgba(0,0,0,.35);
+      --shadow-2: 0 12px 40px rgba(0,0,0,.5);
+      --shadow-glow: 0 0 42px var(--glow-primary);
+      --r-sm: 8px; --r-md: 14px; --r-lg: 22px; --r-pill: 999px;
+      --t-fast: 150ms cubic-bezier(.4,0,.2,1);
+      --t-slow: 600ms cubic-bezier(.22,1,.36,1);
+      --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino', Georgia, serif;
+      --font-body: 'Manrope', -apple-system, 'Segoe UI', 'Helvetica Neue', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    ::selection { background: var(--primary); color: #0E1116; }
+
+    /* ── film-grain overlay ─────────────────────────────── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 200;
+      opacity: .05;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    a:focus-visible, button:focus-visible, summary:focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+
+    .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+    .kicker {
+      font-family: var(--font-mono);
+      font-size: .78rem; font-weight: 500;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: var(--accent);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.9rem, 4vw, 2.9rem);
+      line-height: 1.12;
+      letter-spacing: -.01em;
+      margin: .55rem 0 1rem;
+    }
+    section { padding: 96px 0; position: relative; }
+
+    /* ── scroll reveal ──────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* ══════════════════ HEADER ══════════════════ */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      transition: background var(--t-fast), border-color var(--t-fast), backdrop-filter var(--t-fast);
+      border-bottom: 1px solid transparent;
+    }
+    header.scrolled {
+      background: rgba(14, 17, 22, 0.78);
+      -webkit-backdrop-filter: blur(14px) saturate(1.3);
+      backdrop-filter: blur(14px) saturate(1.3);
+      border-bottom-color: var(--border-glass);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; color: var(--text); font-weight: 800; letter-spacing: .01em; }
+    .brand:hover { text-decoration: none; }
+    .brand img { width: 34px; height: 34px; transition: transform var(--t-slow); }
+    .brand:hover img { transform: rotate(-8deg) scale(1.08); }
+    .brand .name { font-family: var(--font-display); font-size: 1.22rem; font-weight: 700; }
+    .nav-links { display: flex; align-items: center; gap: 26px; }
+    .nav-links a { color: var(--text-dim); font-size: .92rem; font-weight: 600; transition: color var(--t-fast); }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+    .nav-cta {
+      background: var(--primary); color: #0E1116 !important;
+      padding: 8px 18px; border-radius: var(--r-pill);
+      font-weight: 700 !important;
+      transition: transform var(--t-fast), box-shadow var(--t-fast);
+    }
+    .nav-cta:hover { transform: scale(1.05); box-shadow: 0 0 24px var(--glow-soft); text-decoration: none; }
+    @media (max-width: 720px) { .nav-links a:not(.nav-cta) { display: none; } }
+
+    /* ══════════════════ HERO ══════════════════ */
+    .hero {
+      min-height: 100svh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 140px 0 72px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* projector beam */
+    .hero::before {
+      content: '';
+      position: absolute; top: -30%; left: 50%; width: 130vw; height: 130vh;
+      transform: translateX(-50%);
+      background: radial-gradient(ellipse 45% 42% at 50% 22%, rgba(249,115,22,.16), transparent 62%),
+                  radial-gradient(ellipse 30% 30% at 68% 12%, rgba(251,191,36,.09), transparent 60%);
+      pointer-events: none;
+    }
+    .hero-kicker { margin-bottom: 20px; display: flex; align-items: center; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .hero-kicker .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 12px var(--glow-primary); animation: pulse 2.4s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { opacity: .5; } 50% { opacity: 1; } }
+    h1.hero-title {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(2.9rem, 8.4vw, 6rem);
+      line-height: 1.02;
+      letter-spacing: -.022em;
+      text-align: center;
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+    h1 .w {
+      display: inline-block;
+      opacity: 0; transform: translateY(.55em) rotate(1.5deg);
+      animation: word-in .85s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    h1 .amber, h1 .amber .w { color: transparent; background: linear-gradient(100deg, var(--accent), var(--primary)); -webkit-background-clip: text; background-clip: text; }
+    @keyframes word-in { to { opacity: 1; transform: none; } }
+    .hero-sub {
+      text-align: center;
+      color: var(--text-dim);
+      font-size: clamp(1.02rem, 2vw, 1.28rem);
+      max-width: 720px;
+      margin: 26px auto 0;
+      opacity: 0; animation: word-in .9s cubic-bezier(.22,1,.36,1) 1.05s forwards;
+    }
+    .hero-sub strong { color: var(--text); }
+    .hero-ctas {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+      margin-top: 40px;
+      opacity: 0; animation: word-in .9s cubic-bezier(.22,1,.36,1) 1.3s forwards;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 15px 32px; border-radius: var(--r-pill);
+      font-weight: 800; font-size: 1.02rem;
+      transition: transform var(--t-fast), box-shadow var(--t-fast), background var(--t-fast);
+      border: none; cursor: pointer;
+    }
+    .btn:hover { text-decoration: none; transform: scale(1.045) translateY(-1px); }
+    .btn-primary { background: linear-gradient(100deg, var(--accent), var(--primary)); color: #0E1116; box-shadow: 0 6px 28px var(--glow-soft); }
+    .btn-primary:hover { box-shadow: 0 10px 42px var(--glow-primary); }
+    .btn-ghost { background: transparent; color: var(--text); border: 1.5px solid var(--border-glass); }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 6px 24px rgba(0,0,0,.4); }
+    .btn svg { width: 19px; height: 19px; flex: none; }
+
+    /* ── social proof / receipts ───────────────── */
+    .receipts {
+      margin-top: 74px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+      background: var(--border-glass);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      opacity: 0; animation: word-in 1s cubic-bezier(.22,1,.36,1) 1.55s forwards;
+    }
+    .receipt {
+      background: var(--bg-elevated);
+      padding: 26px 18px;
+      text-align: center;
+    }
+    .receipt .num {
+      font-family: var(--font-display);
+      font-weight: 900; font-size: clamp(1.7rem, 3.4vw, 2.5rem);
+      color: var(--accent); line-height: 1.1;
+      font-variant-numeric: tabular-nums;
+    }
+    .receipt .lbl { color: var(--text-dim); font-size: .82rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; margin-top: 6px; }
+    @media (max-width: 780px) { .receipts { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ══════════════════ MEDIA / DEMO ══════════════════ */
+    .media-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 34px; align-items: start; margin-top: 42px; }
+    @media (max-width: 900px) { .media-grid { grid-template-columns: 1fr; } }
+
+    .browser-frame {
+      border-radius: var(--r-md);
+      overflow: hidden;
+      border: 1px solid var(--border-glass);
+      background: var(--bg-elevated);
+      box-shadow: var(--shadow-2), 0 0 80px rgba(249,115,22,.08);
+      transform: perspective(1400px) rotateX(1.2deg);
+    }
+    .browser-bar {
+      display: flex; align-items: center; gap: 8px;
+      padding: 11px 14px;
+      background: #10141b;
+      border-bottom: 1px solid var(--border-glass);
+    }
+    .b-dot { width: 11px; height: 11px; border-radius: 50%; }
+    .b-dot:nth-child(1) { background: #F87171; } .b-dot:nth-child(2) { background: #FBBF24; } .b-dot:nth-child(3) { background: #34D399; }
+    .b-url {
+      flex: 1; margin-left: 8px;
+      background: rgba(245,242,236,.06);
+      border-radius: 7px; padding: 4px 12px;
+      font-family: var(--font-mono); font-size: .74rem; color: var(--text-dim);
+    }
+    .terminal-frame {
+      border-radius: var(--r-md);
+      border: 1px solid var(--border-glass);
+      background: #0B0E13;
+      box-shadow: var(--shadow-2);
+      overflow: hidden;
+    }
+    .terminal-bar {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 14px;
+      background: #10141b;
+      border-bottom: 1px solid var(--border-glass);
+      font-family: var(--font-mono); font-size: .74rem; color: var(--text-dim);
+    }
+    .terminal-body {
+      padding: 18px 18px 22px;
+      font-family: var(--font-mono);
+      font-size: .78rem; line-height: 1.75;
+      overflow-x: auto;
+      white-space: pre;
+      color: #C9D1DC;
+    }
+    .t-cmd { color: var(--text); font-weight: 700; }
+    .t-dim { color: #6B7484; }
+    .t-ok { color: var(--ok); }
+    .t-amber { color: var(--accent); }
+    .t-line { display: block; opacity: 0; }
+    .terminal-frame.play .t-line { animation: t-in .01s forwards; }
+    @keyframes t-in { to { opacity: 1; } }
+    .cursor { display: inline-block; width: 8px; height: 15px; background: var(--accent); vertical-align: -2px; animation: blink 1.05s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ══════════════════ FEATURES (asymmetric) ══════════════════ */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 22px;
+      margin-top: 44px;
+    }
+    .feature {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--r-lg);
+      padding: 30px 28px;
+      transition: transform var(--t-fast), border-color var(--t-fast), box-shadow var(--t-fast);
+      position: relative; overflow: hidden;
+    }
+    .feature:hover { transform: translateY(-4px); border-color: rgba(249,115,22,.45); box-shadow: 0 14px 44px rgba(0,0,0,.45); }
+    .feature.f-hero { grid-column: span 4; }
+    .feature.f-side { grid-column: span 2; }
+    .feature.f-third { grid-column: span 2; }
+    @media (max-width: 900px) { .feature, .feature.f-hero, .feature.f-side, .feature.f-third { grid-column: span 6; } }
+    .feature .f-icon { width: 44px; height: 44px; margin-bottom: 18px; }
+    .feature h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; margin-bottom: 8px; letter-spacing: -.01em; }
+    .feature p { color: var(--text-dim); font-size: .95rem; }
+    .feature p code, .honest-card p code, .faq-a code {
+      font-family: var(--font-mono); font-size: .84em;
+      background: rgba(251,191,36,.09); color: var(--accent);
+      padding: 1px 6px; border-radius: 5px;
+    }
+    .feature .f-tag {
+      position: absolute; top: 22px; right: 22px;
+      font-family: var(--font-mono); font-size: .68rem; letter-spacing: .08em;
+      color: var(--text-dim); border: 1px solid var(--border-glass);
+      padding: 3px 9px; border-radius: var(--r-pill);
+    }
+
+    /* ══════════════════ HONEST BY DESIGN ══════════════════ */
+    .honest-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 44px; }
+    @media (max-width: 900px) { .honest-grid { grid-template-columns: 1fr; } }
+    .honest-card {
+      border-left: 3px solid var(--accent);
+      background: linear-gradient(180deg, rgba(251,191,36,.05), transparent 70%);
+      border-radius: 0 var(--r-md) var(--r-md) 0;
+      padding: 26px 24px;
+    }
+    .honest-card .h-mark { font-family: var(--font-display); font-size: 2rem; color: var(--accent); line-height: 1; }
+    .honest-card blockquote {
+      font-family: var(--font-display);
+      font-style: italic; font-weight: 400;
+      font-size: 1.04rem; line-height: 1.5;
+      margin: 10px 0 12px;
+    }
+    .honest-card p { color: var(--text-dim); font-size: .88rem; }
+    .honest-card .h-src { font-family: var(--font-mono); font-size: .72rem; color: var(--text-dim); letter-spacing: .04em; }
+
+    /* ══════════════════ FAQ ══════════════════ */
+    .faq { max-width: 780px; margin: 44px auto 0; }
+    details {
+      border: 1px solid var(--border-glass);
+      border-radius: var(--r-md);
+      background: var(--bg-elevated);
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    details[open] { border-color: rgba(249,115,22,.4); }
+    summary {
+      cursor: pointer;
+      padding: 19px 22px;
+      font-weight: 700; font-size: 1.02rem;
+      list-style: none;
+      display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      transition: color var(--t-fast);
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary:hover { color: var(--accent); }
+    summary::after { content: '+'; font-family: var(--font-display); font-size: 1.5rem; color: var(--accent); line-height: 1; transition: transform var(--t-fast); flex: none; }
+    details[open] summary::after { transform: rotate(45deg); }
+    .faq-a { padding: 0 22px 22px; color: var(--text-dim); font-size: .96rem; }
+    .faq-a pre {
+      font-family: var(--font-mono); font-size: .78rem;
+      background: #0B0E13; border: 1px solid var(--border-glass);
+      border-radius: var(--r-sm); padding: 13px 16px; margin-top: 12px;
+      overflow-x: auto; color: #C9D1DC;
+    }
+
+    /* ══════════════════ FINAL CTA ══════════════════ */
+    .final {
+      text-align: center;
+      padding: 130px 0 140px;
+      position: relative;
+      overflow: hidden;
+    }
+    .final::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 55% at 50% 100%, rgba(249,115,22,.14), transparent 70%);
+      pointer-events: none;
+    }
+    .final h2 {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(2.2rem, 5.6vw, 4rem);
+      letter-spacing: -.02em;
+      line-height: 1.06;
+      max-width: 860px; margin: 0 auto 18px;
+    }
+    .final p.sub { color: var(--text-dim); max-width: 560px; margin: 0 auto 38px; }
+    .clone-pill {
+      display: inline-flex; align-items: center; gap: 14px;
+      font-family: var(--font-mono); font-size: .92rem;
+      background: #0B0E13;
+      border: 1px solid var(--border-glass);
+      border-radius: var(--r-pill);
+      padding: 15px 26px;
+      cursor: pointer;
+      color: var(--text);
+      transition: border-color var(--t-fast), box-shadow var(--t-fast), transform var(--t-fast);
+      max-width: 100%;
+    }
+    .clone-pill:hover { border-color: var(--accent); box-shadow: 0 0 28px var(--glow-soft); transform: scale(1.02); }
+    .clone-pill .dollar { color: var(--accent); }
+    .clone-pill .copy-hint { font-size: .74rem; color: var(--text-dim); border-left: 1px solid var(--border-glass); padding-left: 14px; white-space: nowrap; }
+    .clone-pill.copied .copy-hint { color: var(--ok); }
+    .clone-cmd { overflow-x: auto; white-space: nowrap; }
+    .final .btn-row { margin-top: 30px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* ══════════════════ FOOTER ══════════════════ */
+    footer {
+      border-top: 1px solid var(--border-glass);
+      padding: 60px 0 44px;
+      background: #0B0E13;
+      position: relative; z-index: 10;
+    }
+    .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 34px; }
+    @media (max-width: 780px) { .foot-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .foot-grid { grid-template-columns: 1fr; } }
+    .foot-brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; }
+    .foot-brand img { width: 28px; height: 28px; }
+    .foot-tag { color: var(--text-dim); font-size: .88rem; margin-top: 12px; max-width: 300px; }
+    footer h4 { font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 14px; font-family: var(--font-mono); font-weight: 500; }
+    footer ul { list-style: none; }
+    footer li { margin-bottom: 9px; }
+    footer li a { color: var(--text); font-size: .93rem; font-weight: 600; }
+    footer li a:hover { color: var(--accent); }
+    .foot-bottom {
+      margin-top: 46px; padding-top: 22px;
+      border-top: 1px solid var(--border-glass);
+      display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+      color: var(--text-dim); font-size: .82rem;
+    }
+
+    /* ── reduced motion ─────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+      h1 .w, .hero-sub, .hero-ctas, .receipts, .t-line { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════ HEADER ══════════════════ -->
+  <header id="hdr">
+    <div class="wrap nav">
+      <a class="brand" href="/" aria-label="Foreshadow home">
+        <img src="/icon.svg" alt="" width="34" height="34" />
+        <span class="name">Foreshadow</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#demo">Demo</a>
+        <a href="#features">Features</a>
+        <a href="#honest">Honesty</a>
+        <a href="#faq">FAQ</a>
+        <a href="/pitch/">Pitch Deck</a>
+        <a class="nav-cta" href="https://github.com/edycutjong/foreshadow">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ══════════════════ HERO ══════════════════ -->
+  <main>
+  <section class="hero" aria-label="Introduction">
+    <div class="wrap">
+      <p class="hero-kicker kicker"><span class="dot" aria-hidden="true"></span> Global AI Hackathon with Qwen Cloud · Track 2 — AI Showrunner</p>
+      <h1 class="hero-title" id="heroTitle">Your near-miss, tomorrow's <span class="amber">safety film</span>.</h1>
+      <p class="hero-sub">An agent film crew turns a real incident report into a 90-second cinematic safety re-enactment — scripted, storyboarded, shot, QC'd, and provenance-signed under a hard render budget. <strong>The ledger says $2.71. The alternative says $15,000.</strong></p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="https://github.com/edycutjong/foreshadow">
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          View on GitHub
+        </a>
+        <a class="btn btn-ghost" href="/pitch/">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4M9 8.5l5 2.5-5 2.5z"/></svg>
+          Pitch Deck
+        </a>
+      </div>
+
+      <!-- receipts: REAL numbers only -->
+      <div class="receipts" role="list" aria-label="Verified project receipts">
+        <div class="receipt" role="listitem">
+          <div class="num"><span data-count="418">0</span></div>
+          <div class="lbl">tests passing</div>
+        </div>
+        <div class="receipt" role="listitem">
+          <div class="num"><span data-count="100">0</span>%</div>
+          <div class="lbl">line coverage</div>
+        </div>
+        <div class="receipt" role="listitem">
+          <div class="num">$<span data-count="2.71" data-decimals="2">0.00</span></div>
+          <div class="lbl">of $4.00 budget ledger</div>
+        </div>
+        <div class="receipt" role="listitem">
+          <div class="num">byte-<wbr>identical</div>
+          <div class="lbl">deterministic replay</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ MEDIA / DEMO ══════════════════ -->
+  <section id="demo" aria-label="Demo">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="kicker">Scene 01 · The demo</p>
+        <h2 class="section-title">One command rebuilds the whole film. Offline. Zero keys.</h2>
+        <p style="color:var(--text-dim); max-width:680px;">The graded artifact runs on <code style="font-family:var(--font-mono); font-size:.85em; color:var(--accent);">FakeQwen</code>, a deterministic transport — a socket guard blocks all network calls, and the replayed manifest is verified byte-for-byte against the committed cache.</p>
+      </div>
+
+      <div class="media-grid">
+        <figure class="browser-frame reveal">
+          <div class="browser-bar" aria-hidden="true">
+            <span class="b-dot"></span><span class="b-dot"></span><span class="b-dot"></span>
+            <span class="b-url">foreshadow.edycu.dev</span>
+          </div>
+          <img src="/readme-hero.png" alt="Foreshadow hero banner — your near-miss, tomorrow's safety film, showing the agent pipeline and $2.71 ledger" width="2560" height="1280" loading="lazy" />
+        </figure>
+
+        <div class="terminal-frame reveal" id="term" aria-label="Terminal output of foreshadow replay">
+          <div class="terminal-bar" aria-hidden="true">
+            <span>zsh — foreshadow</span>
+          </div>
+          <div class="terminal-body"><span class="t-line"><span class="t-dim">$</span> <span class="t-cmd">foreshadow replay --incident forklift</span></span><span class="t-line t-dim">replaying forklift at $4 (offline, FakeQwen, demo keys)</span><span class="t-line">  [<span class="t-ok">  done</span>] screenplay  <span class="t-dim">(beats=3, title=Aisle Seven)</span></span><span class="t-line">  [<span class="t-ok">  done</span>] shot_plan  <span class="t-dim">(shots=8)</span></span><span class="t-line">  [<span class="t-ok">  done</span>] budget_alloc  <span class="t-dim">(mix=hero:3 conn:3 kb:2)</span></span><span class="t-line">  [<span class="t-ok">  done</span>] storyboard  <span class="t-dim">(batch_discount=0.5, frames=8)</span></span><span class="t-line">  [<span class="t-ok">  done</span>] render  <span class="t-dim">(kenburns=2, rendered=6)</span></span><span class="t-line">  [<span class="t-ok">  done</span>] qc  <span class="t-dim">(demoted=0, rejected=0, reviewed=6)</span></span><span class="t-line">  [<span class="t-ok">  done</span>] publish  <span class="t-dim">(invariants=I1-I4 PASS, leaves=36)</span></span><span class="t-line">&nbsp;</span><span class="t-line">  <span class="t-amber">spent $2.7051 of $4.00</span></span><span class="t-line">  <span class="t-dim">merkle root 4a7e3aa0bd296923…</span></span><span class="t-line">  invariants <span class="t-ok">I1-I4 PASS</span></span><span class="t-line">  <span class="t-ok">committed cache: byte-identical</span> <span class="cursor" aria-hidden="true"></span></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ FEATURES ══════════════════ -->
+  <section id="features" aria-label="Features">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="kicker">Scene 02 · The crew</p>
+        <h2 class="section-title">The budget is the product.</h2>
+        <p style="color:var(--text-dim); max-width:680px;">Track 2 asks for maximum output quality under a limited budget. Foreshadow makes that constraint the signature feature — and signs the receipts.</p>
+      </div>
+
+      <div class="features">
+        <article class="feature f-hero reveal">
+          <span class="f-tag">qwen3.6-flash</span>
+          <svg class="f-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <rect x="6" y="26" width="9" height="14" rx="2" fill="#F97316"/>
+            <rect x="19" y="18" width="9" height="22" rx="2" fill="#FBBF24"/>
+            <rect x="32" y="8" width="9" height="32" rx="2" fill="none" stroke="#FBBF24" stroke-width="2.5" stroke-dasharray="4 3"/>
+            <path d="M6 44h35" stroke="#9AA3B2" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <h3>Line Producer — a knapsack with opinions</h3>
+          <p>Every storyboard shot gets a narrative weight; the allocator solves a knapsack over weight × tier cost under a hard dollar cap. Each demotion is priced into a <strong>regret log</strong> ("saved $0.90, narrative weight 2/10"), and a kill switch aborts at 2.5× budget. Quality measurably climbs 49.8% → 78.4% → 92.0% across the $2/$4/$8 sweep.</p>
+        </article>
+
+        <article class="feature f-side reveal">
+          <span class="f-tag">Ed25519</span>
+          <svg class="f-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <path d="M24 4l16 6v12c0 10-6.6 17.4-16 22C14.6 39.4 8 32 8 22V10l16-6z" stroke="#FBBF24" stroke-width="2.5" fill="rgba(251,191,36,.07)"/>
+            <path d="M17 23.5l5 5 9-10" stroke="#34D399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h3>Merkle-rooted provenance</h3>
+          <p>36 SHA-256 leaves roll into a Merkle root signed with Ed25519. <code>foreshadow verify</code> re-hashes everything and proves invariants I1–I4; a 1-byte tamper fails.</p>
+        </article>
+
+        <article class="feature f-third reveal">
+          <span class="f-tag">replay</span>
+          <svg class="f-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <path d="M10 24a14 14 0 1 1 4 9.8" stroke="#F97316" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M10 34v-8h8" stroke="#F97316" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="24" cy="24" r="3.5" fill="#FBBF24"/>
+          </svg>
+          <h3>Deterministic replay</h3>
+          <p>The same incident replays to a <strong>byte-identical</strong> signed manifest on every machine — the root and signature match the committed cache exactly.</p>
+        </article>
+
+        <article class="feature f-third reveal">
+          <span class="f-tag">zero keys</span>
+          <svg class="f-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <circle cx="24" cy="24" r="17" stroke="#9AA3B2" stroke-width="2.5"/>
+            <path d="M8 30l32-12" stroke="#F87171" stroke-width="3" stroke-linecap="round"/>
+            <path d="M17 20.5c2-3.5 12-3.5 14 0M19 28c1.5 2.5 8.5 2.5 10 0" stroke="#FBBF24" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+          <h3>Offline judge path</h3>
+          <p>A session-wide <strong>socket guard</strong> blocks the network; 418 tests, the replay, and the provenance check all pass with zero keys. <code>verify_offline.py</code> exits 0.</p>
+        </article>
+
+        <article class="feature f-hero reveal">
+          <span class="f-tag">wan2.7-i2v · qwen3-vl-plus</span>
+          <svg class="f-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <rect x="4" y="12" width="28" height="24" rx="4" stroke="#FBBF24" stroke-width="2.5"/>
+            <path d="M32 20l12-6v20l-12-6" stroke="#F97316" stroke-width="2.5" stroke-linejoin="round" fill="rgba(249,115,22,.1)"/>
+            <circle cx="14" cy="21" r="3" fill="#FBBF24"/>
+            <path d="M8 32l6-5 4 3 7-6 3 2" stroke="#9AA3B2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h3>An eight-surface Qwen film crew</h3>
+          <p>Screenwriter (<code>qwen3.7-max</code> + thinking) → Art Dept (<code>qwen-image-2.0-pro</code>) → DP (<code>wan2.7-i2v</code> hero shots, <code>wan2.6-i2v-flash</code> connective tier) → QC Critic (<code>qwen3-vl-plus</code>) → Narrator (<code>cosyvoice-v3-plus</code>), plus structured output and Batch −50% fan-out. One platform, one bill — which is what makes a single cost ledger possible at all.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ HONEST BY DESIGN ══════════════════ -->
+  <section id="honest" aria-label="Honest disclosures">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="kicker">Scene 03 · No smoke, no mirrors</p>
+        <h2 class="section-title">Honest by design.</h2>
+        <p style="color:var(--text-dim); max-width:680px;">A provenance tool that oversold itself would be a contradiction. These disclosure lines are quoted from the README — what's real, what's mocked, and where the line is.</p>
+      </div>
+
+      <div class="honest-grid">
+        <article class="honest-card reveal">
+          <div class="h-mark" aria-hidden="true">&ldquo;</div>
+          <blockquote>The graded replay writes deterministic <em>stub</em> media … so replay stays byte-identical on every machine.</blockquote>
+          <p>For something watchable, <code>foreshadow preview</code> renders a real, playable MP4 animatic — clearly stamped as an animatic, not AI footage.</p>
+          <p class="h-src">— README · Status / Pending</p>
+        </article>
+
+        <article class="honest-card reveal">
+          <div class="h-mark" aria-hidden="true">&ldquo;</div>
+          <blockquote>Chat surfaces are fully implemented … image/video/TTS surfaces are payload-complete builders that raise <code>LiveSurfaceNotVerified</code> until a key is present.</blockquote>
+          <p>The graded artifact runs on FakeQwen; real <code>wan2.7-i2v</code> runs only behind <code>DASHSCOPE_API_KEY</code>.</p>
+          <p class="h-src">— README · Live Qwen integration</p>
+        </article>
+
+        <article class="honest-card reveal">
+          <div class="h-mark" aria-hidden="true">&ldquo;</div>
+          <blockquote>Signing proves <em>pipeline integrity, not narrative truth</em> — documented honestly, not hidden.</blockquote>
+          <p>A fabricated report would yield a validly-signed fabricated film. The threat model says so out loud, in <code>docs/SPEC-PROVENANCE.md</code>.</p>
+          <p class="h-src">— README · Provenance &amp; verification</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ FAQ ══════════════════ -->
+  <section id="faq" aria-label="Frequently asked questions">
+    <div class="wrap">
+      <div class="reveal" style="text-align:center;">
+        <p class="kicker">Scene 04 · Q&amp;A</p>
+        <h2 class="section-title">Questions a judge would ask.</h2>
+      </div>
+
+      <div class="faq reveal">
+        <details>
+          <summary>Is the demo really offline?</summary>
+          <div class="faq-a">
+            <p>Yes. <code>scripts/verify_offline.py</code> installs a socket guard that makes any network call raise, replays forklift@$4 from scratch, verifies invariants I1–I4, and confirms the fresh manifest is byte-identical to the committed cache. Exit 0 means it reproduced with zero network and zero keys. The 418-test suite runs under the same guard.</p>
+          </div>
+        </details>
+        <details>
+          <summary>What is FakeQwen?</summary>
+          <div class="faq-a">
+            <p>A deterministic, keyless stand-in for the Qwen Cloud transport. It returns seeded, mechanistic responses for every surface so the pipeline, ledger, QC loop, and provenance chain are fully exercised — and replays byte-identically. The live transport (<code>qwen/live.py</code>) implements the chat surfaces on the OpenAI-compatible endpoint and gates image/video/TTS behind <code>DASHSCOPE_API_KEY</code>.</p>
+          </div>
+        </details>
+        <details>
+          <summary>How do I run it?</summary>
+          <div class="faq-a">
+            <p>Python 3.12+, no keys:</p>
+            <pre>python -m venv .venv
+./.venv/bin/pip install -e ".[dev]"
+./.venv/bin/pytest                        # 418 passed, 100% cov
+./.venv/bin/foreshadow replay --incident forklift
+./.venv/bin/foreshadow preview --incident forklift  # playable .mp4</pre>
+          </div>
+        </details>
+        <details>
+          <summary>Which Qwen models does it use?</summary>
+          <div class="faq-a">
+            <p><code>qwen3.7-max</code> (+ thinking) for the screenplay and structured shot plan, <code>qwen3.6-flash</code> for allocation rationale, <code>qwen-image-2.0-pro</code> for character sheets and storyboards, <code>wan2.7-i2v</code> / <code>wan2.6-i2v-flash</code> for the two video tiers, <code>qwen3-vl-plus</code> for dailies QC, and <code>cosyvoice-v3-plus</code> for narration. All ids are pinned in <code>config.ALLOWED_MODELS</code>; any other id raises before a call is built.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Is film.mp4 a real video?</summary>
+          <div class="faq-a">
+            <p>On the offline path, no — it's a signed edit-list stub kept byte-identical for replay determinism, and the README says so plainly. <code>foreshadow preview</code> renders a real, playable H.264 animatic (title cards + narration script + Ken-Burns motion) from the same deterministic shot plan. Real AI video generation runs only in live mode with a key.</p>
+          </div>
+        </details>
+        <details>
+          <summary>What's the license?</summary>
+          <div class="faq-a">
+            <p>MIT, © 2026 Edy Cu. Bug reports and PRs welcome — see <code>.github/CONTRIBUTING.md</code> for the pre-PR checklist (<code>ruff</code>, <code>pytest --cov</code>, <code>verify_offline.py</code>).</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ FINAL CTA ══════════════════ -->
+  <section class="final" aria-label="Get started">
+    <div class="wrap reveal">
+      <p class="kicker">Final scene</p>
+      <h2>Roll the film on <span style="color:var(--accent);">your</span> incident log.</h2>
+      <p class="sub">Clone it, replay it, verify the signature yourself. No keys, no network, no trust required.</p>
+      <button class="clone-pill" id="clonePill" type="button" aria-label="Copy clone command to clipboard">
+        <span class="clone-cmd"><span class="dollar">$</span> git clone https://github.com/edycutjong/foreshadow</span>
+        <span class="copy-hint" id="copyHint">click to copy</span>
+      </button>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="https://github.com/edycutjong/foreshadow">
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" width="19" height="19"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <!-- ══════════════════ FOOTER ══════════════════ -->
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <div class="foot-brand">
+            <img src="/icon.svg" alt="" width="28" height="28" />
+            Foreshadow
+          </div>
+          <p class="foot-tag">An agent film crew for the incident reports you already have. Built solo for the Global AI Hackathon with Qwen Cloud.</p>
+        </div>
+        <nav aria-label="Project links">
+          <h4>Project</h4>
+          <ul>
+            <li><a href="https://github.com/edycutjong/foreshadow">GitHub</a></li>
+            <li><a href="/pitch/">Pitch Deck</a></li>
+            <li><a href="https://github.com/edycutjong/foreshadow/blob/main/DEMO.md">Demo Script</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Hackathon links">
+          <h4>Hackathon</h4>
+          <ul>
+            <li><a href="https://qwencloud-hackathon.devpost.com/">Devpost</a></li>
+            <li><a href="https://github.com/edycutjong/foreshadow/blob/main/docs/BENCH.md">Benchmarks</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Legal links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="https://github.com/edycutjong/foreshadow/blob/main/LICENSE">MIT License</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2026 Edy Cu. MIT licensed.</span>
+        <span>foreshadow.edycu.dev · Track 2 — AI Showrunner</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* sticky header blur */
+      var hdr = document.getElementById('hdr');
+      function onScroll() { hdr.classList.toggle('scrolled', window.scrollY > 12); }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      /* staggered hero words */
+      var title = document.getElementById('heroTitle');
+      (function splitWords(el) {
+        var i = 0;
+        function walk(node) {
+          if (node.nodeType === 3) {
+            var frag = document.createDocumentFragment();
+            node.textContent.split(/(\s+)/).forEach(function (part) {
+              if (/^\s+$/.test(part) || part === '') { frag.appendChild(document.createTextNode(part)); return; }
+              var s = document.createElement('span');
+              s.className = 'w';
+              s.style.animationDelay = (0.12 + i * 0.09) + 's';
+              s.textContent = part;
+              frag.appendChild(s); i++;
+            });
+            node.parentNode.replaceChild(frag, node);
+          } else if (node.nodeType === 1) {
+            Array.prototype.slice.call(node.childNodes).forEach(walk);
+          }
+        }
+        walk(el);
+      })(title);
+
+      /* scroll reveals */
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+
+      /* count-up receipts */
+      function countUp(el) {
+        var target = parseFloat(el.getAttribute('data-count'));
+        var dec = parseInt(el.getAttribute('data-decimals') || '0', 10);
+        if (reduced) { el.textContent = target.toFixed(dec); return; }
+        var t0 = null, dur = 1400;
+        function frame(t) {
+          if (!t0) t0 = t;
+          var p = Math.min((t - t0) / dur, 1);
+          var eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = (target * eased).toFixed(dec);
+          if (p < 1) requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      }
+      var countIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { countUp(e.target); countIo.unobserve(e.target); }
+        });
+      }, { threshold: 0.4 });
+      document.querySelectorAll('[data-count]').forEach(function (el) { countIo.observe(el); });
+
+      /* terminal line-by-line playback */
+      var term = document.getElementById('term');
+      var termIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          termIo.unobserve(term);
+          var lines = term.querySelectorAll('.t-line');
+          lines.forEach(function (ln, idx) {
+            ln.style.animationDelay = reduced ? '0s' : (idx * 0.28) + 's';
+          });
+          term.classList.add('play');
+        });
+      }, { threshold: 0.3 });
+      termIo.observe(term);
+
+      /* copy-on-click clone pill */
+      var pill = document.getElementById('clonePill');
+      var hint = document.getElementById('copyHint');
+      pill.addEventListener('click', function () {
+        var cmd = 'git clone https://github.com/edycutjong/foreshadow';
+        function done() {
+          pill.classList.add('copied');
+          hint.textContent = 'copied ✓';
+          setTimeout(function () { pill.classList.remove('copied'); hint.textContent = 'click to copy'; }, 2200);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(cmd).then(done, done);
+        } else { done(); }
+      });
+    })();
+  </script>
+</body>
+</html>
