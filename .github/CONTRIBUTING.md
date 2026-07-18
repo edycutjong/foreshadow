@@ -16,7 +16,7 @@ Thanks for your interest in improving Foreshadow!
 
 ## Before You Open a PR
 - `ruff check .` passes (lint).
-- `pytest --cov=src/foreshadow` passes — all 408 tests are offline via a
+- `pytest --cov=src/foreshadow` passes — all 418 tests are offline via a
   session-wide socket guard.
 - `python scripts/verify_offline.py` exits `0` (socket-guarded replay + I1-I4
   invariant re-verification).

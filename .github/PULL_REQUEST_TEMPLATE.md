@@ -6,7 +6,7 @@
 
 ## Checklist
 - [ ] `ruff check .` passes
-- [ ] `pytest --cov=src/foreshadow` passes (offline, 408+ tests)
+- [ ] `pytest --cov=src/foreshadow` passes (offline, 418+ tests)
 - [ ] `python scripts/verify_offline.py` exits 0
 - [ ] Tests added/updated for the change
 - [ ] Docs / README updated if needed
