@@ -240,7 +240,7 @@ Please also read the
 
 [MIT](LICENSE) © 2026 Edy Cu.
 
-## Versioning
+## 🏷️ Versioning
 
 This project uses [Semantic Versioning](https://semver.org) with **fully automated** version
 management driven by [Conventional Commits](https://www.conventionalcommits.org) — the version is
