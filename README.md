@@ -10,15 +10,15 @@
   [![Pitch Deck](https://img.shields.io/badge/%F0%9F%8E%9E%EF%B8%8F_Pitch-Deck-f59e0b?style=for-the-badge)](https://foreshadow.edycu.dev/pitch/)
   [![Demo Path](https://img.shields.io/badge/%F0%9F%95%B9%EF%B8%8F_Judge-Demo_Path-F59E0B?style=for-the-badge)](DEMO.md)
   [![QwenCloud Hackathon](https://img.shields.io/badge/QwenCloud-Track_2_AI_Showrunner-8b5cf6?style=for-the-badge)](https://qwencloud-hackathon.devpost.com/)
-  [![License: MIT](https://img.shields.io/badge/License-MIT-06b6d4?style=for-the-badge)](LICENSE)
 
   <br/>
 
   ![Python](https://img.shields.io/badge/Python_3.12%2B-3776AB?style=flat&logo=python&logoColor=white)
-  ![Tests](https://img.shields.io/badge/tests-418_passing-success?style=flat)
+  ![Tests](https://img.shields.io/badge/tests-420_passing-success?style=flat)
   ![Coverage](https://img.shields.io/badge/coverage-100%25-success?style=flat)
   ![Ruff](https://img.shields.io/badge/lint-ruff-261230?style=flat)
   ![Offline](https://img.shields.io/badge/demo-offline%2C_zero_keys-blue?style=flat)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-06b6d4)](LICENSE)
   [![CI](https://github.com/edycutjong/foreshadow/actions/workflows/ci.yml/badge.svg)](https://github.com/edycutjong/foreshadow/actions/workflows/ci.yml)
 </div>
 
@@ -67,7 +67,7 @@ flowchart LR
 ```bash
 python -m venv .venv
 ./.venv/bin/pip install -e ".[dev]"             # includes the offline animatic renderer
-./.venv/bin/pytest                              # -> 418 passed, 100% coverage
+./.venv/bin/pytest                              # -> 420 passed, 100% coverage
 ./.venv/bin/foreshadow replay --incident forklift
 ```
 
@@ -78,7 +78,7 @@ byte-for-byte. (`foreshadow` is on the venv path after install; the task's
 
 ## 🧪 Tests
 
-**418 tests, all passing at 100% coverage** (`./.venv/bin/pytest` after
+**420 tests, all passing at 100% coverage** (`./.venv/bin/pytest` after
 `pip install -e ".[dev]"`, fully offline via a session-wide socket guard).
 Coverage includes: the Line Producer knapsack math,
 budget caps and the 2.5×B kill switch; invariants I1–I4 (each failed in
@@ -88,13 +88,13 @@ round-trips; byte-identical replay determinism; the ledger, regret log, and
 storage layer; and the full 11-stage pipeline end-to-end for all three seeds.
 
 ```
-418 passed
+420 passed
 ```
 
 ## 🕹️ What a judge runs
 
 ```bash
-./.venv/bin/pytest                              # 418 passed, 100% cov, offline
+./.venv/bin/pytest                              # 420 passed, 100% cov, offline
 ./.venv/bin/python scripts/verify_offline.py    # socket-guarded replay + I1–I4, exit 0
 ./.venv/bin/foreshadow replay --incident forklift   # rebuild the demo film, zero keys
 ./.venv/bin/foreshadow preview --incident forklift  # → forklift_animatic.mp4 (real, playable)
@@ -157,7 +157,7 @@ pip-audit                                        # dependency vulnerability scan
 |---|---|---|
 | Code Quality | ruff | ✅ clean |
 | Type Checking | mypy | ⚠️ advisory (3 pre-existing gaps, non-blocking) |
-| Unit Testing | pytest (418 tests, 100% coverage) | ✅ |
+| Unit Testing | pytest (420 tests, 100% coverage) | ✅ |
 | Offline Judge Proof | `scripts/verify_offline.py` (socket-guarded) | ✅ |
 | Security (SAST) | CodeQL (`python`) | ✅ |
 | Security (SCA) | Dependabot (`pip` + `github-actions`) + `pip-audit` | ✅ |
@@ -217,7 +217,7 @@ scoped for the offline-first build and are **not** claimed as done:
 build/
 ├── .github/               CI/CD, CodeQL, Dependabot, community health files
 ├── src/foreshadow/        pipeline, agents, crypto, qwen transports, CLI
-├── tests/                 418 offline tests
+├── tests/                 420 offline tests
 ├── seeds/                 3 OSHA-300-style incidents (deterministic)
 ├── fixtures/cache/        committed replay artifacts (the OSS archive, locally)
 ├── scripts/               bench.py · verify_offline.py · check_submission_readiness.py · regen_cache.py

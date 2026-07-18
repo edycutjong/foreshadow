@@ -20,7 +20,7 @@ no separate install, no network, no key.)
 Expected (last line):
 
 ```
-418 passed
+420 passed
 ```
 
 ## 1. Rebuild the demo film from the incident report (the money shot)
