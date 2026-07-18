@@ -17,7 +17,7 @@
   ![Coverage](https://img.shields.io/badge/coverage-100%25-success?style=flat)
   ![Ruff](https://img.shields.io/badge/lint-ruff-261230?style=flat)
   ![Offline](https://img.shields.io/badge/demo-offline%2C_zero_keys-blue?style=flat)
-  [![CI](https://github.com/edycu/foreshadow/actions/workflows/ci.yml/badge.svg)](https://github.com/edycu/foreshadow/actions/workflows/ci.yml)
+  [![CI](https://github.com/edycutjong/foreshadow/actions/workflows/ci.yml/badge.svg)](https://github.com/edycutjong/foreshadow/actions/workflows/ci.yml)
 </div>
 
 **An agent film studio that turns a company's own near-miss incident report into

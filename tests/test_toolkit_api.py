@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import tomllib
+from pathlib import Path
+
 import foreshadow
 from foreshadow import (
     Allocation,
@@ -29,7 +32,11 @@ from foreshadow import (
 
 
 def test_version_is_declared():
-    assert foreshadow.__version__ == "0.1.0"
+    # Read the expected version from pyproject.toml (the file semantic-release
+    # bumps) so this test can never go stale after a release.
+    pyproject = Path(__file__).resolve().parent.parent / "pyproject.toml"
+    expected = tomllib.loads(pyproject.read_text())["project"]["version"]
+    assert foreshadow.__version__ == expected
 
 
 def test_all_exports_are_importable():
