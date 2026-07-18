@@ -61,7 +61,12 @@ class LiveQwen(QwenTransport):
                 raise RuntimeError(
                     "LiveQwen needs the openai SDK: pip install 'foreshadow-pipeline[live]'"
                 ) from exc
-            self._client = OpenAI(api_key=self.api_key, base_url=config.DASHSCOPE_BASE_URL)
+            self._client = OpenAI(
+                api_key=self.api_key,
+                base_url=config.DASHSCOPE_BASE_URL,
+                timeout=120.0,
+                max_retries=2,
+            )
         return self._client
 
     def _chat(self, model: str, prompt: str, *, kind: str,
@@ -84,8 +89,11 @@ class LiveQwen(QwenTransport):
                 "type": "json_schema",
                 "json_schema": {"name": kind, "schema": json_schema, "strict": True},
             }
-        if thinking:
-            kwargs["extra_body"] = {"enable_thinking": True}
+        # Qwen3 chat models default to "thinking" mode (thousands of reasoning
+        # tokens/call, ~45s) which times out large prompts and hangs live runs.
+        # Always set enable_thinking explicitly: OFF for normal generation,
+        # ON only where reasoning is genuinely needed (e.g. screenplay).
+        kwargs["extra_body"] = {"enable_thinking": bool(thinking)}
         start = time.monotonic()
         response = self.client().chat.completions.create(**kwargs)
         latency_ms = int((time.monotonic() - start) * 1000)

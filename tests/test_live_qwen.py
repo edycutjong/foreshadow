@@ -75,6 +75,14 @@ def test_chat_shotplan_requests_json_schema():
     assert rf["json_schema"]["strict"] is True
 
 
+def test_normal_generation_disables_thinking():
+    # Non-reasoning calls must set enable_thinking OFF explicitly so Qwen3
+    # does not default into (slow, timeout-prone) thinking mode.
+    client = _FakeChatClient('{"shots": []}')
+    LiveQwen(api_key="k", client=client).chat_shotplan({"title": "T"}, "forklift")
+    assert client.last_kwargs["extra_body"] == {"enable_thinking": False}
+
+
 def test_chat_alloc_rationale_strips_text():
     client = _FakeChatClient("  producer note  ")
     text, meta = LiveQwen(api_key="k", client=client).chat_alloc_rationale("S1:hero")

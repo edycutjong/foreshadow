@@ -40,9 +40,12 @@ def test_live_qwen_client_lazily_imports_and_constructs_openai(monkeypatch):
     created: dict[str, str] = {}
 
     class _FakeOpenAI:
-        def __init__(self, api_key: str, base_url: str) -> None:
+        def __init__(self, api_key: str, base_url: str,
+                     timeout: float, max_retries: int) -> None:
             created["api_key"] = api_key
             created["base_url"] = base_url
+            created["timeout"] = timeout
+            created["max_retries"] = max_retries
 
     fake_module = types.ModuleType("openai")
     fake_module.OpenAI = _FakeOpenAI  # type: ignore[attr-defined]
@@ -52,6 +55,11 @@ def test_live_qwen_client_lazily_imports_and_constructs_openai(monkeypatch):
     client = q.client()
 
     assert isinstance(client, _FakeOpenAI)
-    assert created == {"api_key": "k-live", "base_url": config.DASHSCOPE_BASE_URL}
+    assert created == {
+        "api_key": "k-live",
+        "base_url": config.DASHSCOPE_BASE_URL,
+        "timeout": 120.0,
+        "max_retries": 2,
+    }
     # cached: a second call must not reconstruct the client
     assert q.client() is client
