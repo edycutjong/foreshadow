@@ -483,12 +483,16 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4M9 8.5l5 2.5-5 2.5z"/></svg>
           Pitch Deck
         </a>
+        <a class="btn btn-ghost" href="https://foreshadow-txebjackop.ap-southeast-1.fcapp.run/verify" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          Live on Alibaba Cloud ☁️
+        </a>
       </div>
 
       <!-- receipts: REAL numbers only -->
       <div class="receipts" role="list" aria-label="Verified project receipts">
         <div class="receipt" role="listitem">
-          <div class="num"><span data-count="420">0</span></div>
+          <div class="num"><span data-count="421">0</span></div>
           <div class="lbl">tests passing</div>
         </div>
         <div class="receipt" role="listitem">
@@ -586,7 +590,7 @@
             <path d="M17 20.5c2-3.5 12-3.5 14 0M19 28c1.5 2.5 8.5 2.5 10 0" stroke="#FBBF24" stroke-width="2.2" stroke-linecap="round"/>
           </svg>
           <h3>Offline judge path</h3>
-          <p>A session-wide <strong>socket guard</strong> blocks the network; 420 tests, the replay, and the provenance check all pass with zero keys. <code>verify_offline.py</code> exits 0.</p>
+          <p>A session-wide <strong>socket guard</strong> blocks the network; 421 tests, the replay, and the provenance check all pass with zero keys. <code>verify_offline.py</code> exits 0.</p>
         </article>
 
         <article class="feature f-hero reveal">
@@ -650,7 +654,7 @@
         <details>
           <summary>Is the demo really offline?</summary>
           <div class="faq-a">
-            <p>Yes. <code>scripts/verify_offline.py</code> installs a socket guard that makes any network call raise, replays forklift@$4 from scratch, verifies invariants I1–I4, and confirms the fresh manifest is byte-identical to the committed cache. Exit 0 means it reproduced with zero network and zero keys. The 420-test suite runs under the same guard.</p>
+            <p>Yes. <code>scripts/verify_offline.py</code> installs a socket guard that makes any network call raise, replays forklift@$4 from scratch, verifies invariants I1–I4, and confirms the fresh manifest is byte-identical to the committed cache. Exit 0 means it reproduced with zero network and zero keys. The 421-test suite runs under the same guard.</p>
           </div>
         </details>
         <details>
@@ -665,7 +669,7 @@
             <p>Python 3.12+, no keys:</p>
             <pre>python -m venv .venv
 ./.venv/bin/pip install -e ".[dev]"
-./.venv/bin/pytest                        # 420 passed, 100% cov
+./.venv/bin/pytest                        # 421 passed, 100% cov
 ./.venv/bin/foreshadow replay --incident forklift
 ./.venv/bin/foreshadow preview --incident forklift  # playable .mp4</pre>
           </div>

@@ -7,6 +7,7 @@
   <br/><br/>
 
   [![Live](https://img.shields.io/badge/%F0%9F%8C%90_Live-foreshadow.edycu.dev-06b6d4?style=for-the-badge)](https://foreshadow.edycu.dev)
+  [![Live on Alibaba Function Compute](https://img.shields.io/badge/%E2%98%81%EF%B8%8F_Live_on-Alibaba_Function_Compute-FF6A00?style=for-the-badge)](https://foreshadow-txebjackop.ap-southeast-1.fcapp.run/verify)
   [![Pitch Deck](https://img.shields.io/badge/%F0%9F%8E%9E%EF%B8%8F_Pitch-Deck-f59e0b?style=for-the-badge)](https://foreshadow.edycu.dev/pitch/)
   [![Demo Path](https://img.shields.io/badge/%F0%9F%95%B9%EF%B8%8F_Judge-Demo_Path-F59E0B?style=for-the-badge)](DEMO.md)
   [![QwenCloud Hackathon](https://img.shields.io/badge/QwenCloud-Track_2_AI_Showrunner-8b5cf6?style=for-the-badge)](https://qwencloud-hackathon.devpost.com/)
@@ -14,7 +15,7 @@
   <br/>
 
   ![Python](https://img.shields.io/badge/Python_3.12%2B-3776AB?style=flat&logo=python&logoColor=white)
-  ![Tests](https://img.shields.io/badge/tests-420_passing-success?style=flat)
+  ![Tests](https://img.shields.io/badge/tests-421_passing-success?style=flat)
   ![Coverage](https://img.shields.io/badge/coverage-100%25-success?style=flat)
   ![Ruff](https://img.shields.io/badge/lint-ruff-261230?style=flat)
   ![Offline](https://img.shields.io/badge/demo-offline%2C_zero_keys-blue?style=flat)
@@ -57,17 +58,43 @@ flowchart LR
   T --> F["FakeQwen<br/>default · deterministic · no key"]
   T --> L["LiveQwen — DASHSCOPE_API_KEY<br/>qwen3.7-max · qwen-image-2.0-pro<br/>wan2.7-i2v / wan2.6-i2v-flash · qwen3-vl-plus · cosyvoice-v3-plus"]
   M --> V["Ed25519-signed Merkle manifest<br/>verify: I1–I4, 1-byte tamper fails"]
-  P -.-> FC["infra/fc handler — ready, not yet deployed"]
+  P --> FC["infra/fc handler — LIVE on Alibaba Function Compute<br/>managed python3.10 · /verify · /run · /health"]
 ```
 
-<sub>**As built** = what runs today (offline, keyless, on FakeQwen). The full deployed topology — Next.js war-room UI, Supabase, live Function Compute + OSS — is specified in `../ARCHITECTURE.md` / `../SPEC.md` and is pending (see **Status**).</sub>
+<sub>**As built** = what runs today (offline, keyless, on FakeQwen). The Function Compute handler is now **live on Alibaba Cloud** (see **☁️ Deployed** below); the rest of the deployed topology — Next.js war-room UI, Supabase, OSS render archive — is specified in `../ARCHITECTURE.md` / `../SPEC.md` and remains pending (see **Status**).</sub>
+
+## ☁️ Deployed (live on Alibaba Function Compute)
+
+Foreshadow is deployed live on **Alibaba Cloud Function Compute** (managed
+`python3.10` runtime), so a judge can hit the graded pipeline in the cloud with
+no local setup:
+
+| Endpoint | What it does |
+|---|---|
+| [`/health`](https://foreshadow-txebjackop.ap-southeast-1.fcapp.run/health) | liveness — `{"status":"ok"}` |
+| [`/verify`](https://foreshadow-txebjackop.ap-southeast-1.fcapp.run/verify) | replays the signed ledger and **re-verifies the Ed25519 signature + Merkle chain and invariants I1–I4 in the cloud** (`byte_identical_cache: true`) |
+| [`/run?incident=forklift`](https://foreshadow-txebjackop.ap-southeast-1.fcapp.run/run?incident=forklift) | replays the full pipeline for a seed incident and returns the ledger (`$2.71` spend), budget mix, QC counts, and Merkle root |
+
+```bash
+curl https://foreshadow-txebjackop.ap-southeast-1.fcapp.run/health
+curl https://foreshadow-txebjackop.ap-southeast-1.fcapp.run/verify
+curl "https://foreshadow-txebjackop.ap-southeast-1.fcapp.run/run?incident=forklift"
+```
+
+The deployed endpoints run the **offline-deterministic `FakeQwen` pipeline** —
+the same byte-for-byte replayable, signed-ledger path that the tests grade — so
+the cloud response is identical to a local `foreshadow replay`. Live-Qwen
+surfaces stay behind `DASHSCOPE_API_KEY`; a real DashScope call has been smoke-
+verified separately (chat surface), but the deployed `/run` and `/verify` paths
+are the deterministic replay, and no AI-generated video is produced on this path.
+Handler + config: [`infra/fc/`](infra/fc/) (`handler.py`, `wsgi.py`, `s.yaml`).
 
 ## 🚀 Quickstart (offline, zero API keys)
 
 ```bash
 python -m venv .venv
 ./.venv/bin/pip install -e ".[dev]"             # includes the offline animatic renderer
-./.venv/bin/pytest                              # -> 420 passed, 100% coverage
+./.venv/bin/pytest                              # -> 421 passed, 100% coverage
 ./.venv/bin/foreshadow replay --incident forklift
 ```
 
@@ -78,7 +105,7 @@ byte-for-byte. (`foreshadow` is on the venv path after install; the task's
 
 ## 🧪 Tests
 
-**420 tests, all passing at 100% coverage** (`./.venv/bin/pytest` after
+**421 tests, all passing at 100% coverage** (`./.venv/bin/pytest` after
 `pip install -e ".[dev]"`, fully offline via a session-wide socket guard).
 Coverage includes: the Line Producer knapsack math,
 budget caps and the 2.5×B kill switch; invariants I1–I4 (each failed in
@@ -88,13 +115,13 @@ round-trips; byte-identical replay determinism; the ledger, regret log, and
 storage layer; and the full 11-stage pipeline end-to-end for all three seeds.
 
 ```
-420 passed
+421 passed
 ```
 
 ## 🕹️ What a judge runs
 
 ```bash
-./.venv/bin/pytest                              # 420 passed, 100% cov, offline
+./.venv/bin/pytest                              # 421 passed, 100% cov, offline
 ./.venv/bin/python scripts/verify_offline.py    # socket-guarded replay + I1–I4, exit 0
 ./.venv/bin/foreshadow replay --incident forklift   # rebuild the demo film, zero keys
 ./.venv/bin/foreshadow preview --incident forklift  # → forklift_animatic.mp4 (real, playable)
@@ -157,7 +184,7 @@ pip-audit                                        # dependency vulnerability scan
 |---|---|---|
 | Code Quality | ruff | ✅ clean |
 | Type Checking | mypy | ⚠️ advisory (3 pre-existing gaps, non-blocking) |
-| Unit Testing | pytest (420 tests, 100% coverage) | ✅ |
+| Unit Testing | pytest (421 tests, 100% coverage) | ✅ |
 | Offline Judge Proof | `scripts/verify_offline.py` (socket-guarded) | ✅ |
 | Security (SAST) | CodeQL (`python`) | ✅ |
 | Security (SCA) | Dependabot (`pip` + `github-actions`) + `pip-audit` | ✅ |
@@ -192,13 +219,17 @@ scoped for the offline-first build and are **not** claimed as done:
 - **Next.js war-room UI — deferred.** The CLI + logs are the demo surface. The
   UI (agent lanes, live ledger, player) is designed in `UI.md` but not built.
 - **Live Qwen integration — behind `DASHSCOPE_API_KEY`.** Chat surfaces are
-  fully implemented on the OpenAI-compatible endpoint; the image/video/TTS
-  surfaces are payload-complete builders that raise `LiveSurfaceNotVerified`
-  until a key is present (`src/foreshadow/qwen/live.py`). The graded artifact
-  runs on `FakeQwen`.
-- **Alibaba Function Compute — not yet deployed.** `infra/fc/handler.py` +
-  `s.yaml` are complete and the handler runs offline; no live console recording
-  is claimed (see [`infra/fc/PROOF.md`](infra/fc/PROOF.md)).
+  fully implemented on the OpenAI-compatible endpoint and a real DashScope call
+  has been smoke-verified; the image/video/TTS surfaces are payload-complete
+  builders that raise `LiveSurfaceNotVerified` until a key is present
+  (`src/foreshadow/qwen/live.py`). The graded artifact runs on `FakeQwen`, and
+  no full captured live-Qwen run / AI-generated video is claimed.
+- **Alibaba Function Compute — ✅ deployed & live.** The handler is deployed on
+  managed `python3.10` at
+  <https://foreshadow-txebjackop.ap-southeast-1.fcapp.run> (`/health`, `/verify`,
+  `/run`) — see **☁️ Deployed** above. It serves the same offline-deterministic
+  `FakeQwen` replay path; the OSS render archive is still pending
+  (see [`infra/fc/PROOF.md`](infra/fc/PROOF.md)).
 - **Media on the offline path — stubs, plus a watchable animatic.** The graded
   replay writes deterministic *stub* media (`film.mp4` is a signed edit-list
   manifest, not decodable video) so replay stays byte-identical on every machine.
@@ -217,12 +248,12 @@ scoped for the offline-first build and are **not** claimed as done:
 build/
 ├── .github/               CI/CD, CodeQL, Dependabot, community health files
 ├── src/foreshadow/        pipeline, agents, crypto, qwen transports, CLI
-├── tests/                 420 offline tests
+├── tests/                 421 offline tests
 ├── seeds/                 3 OSHA-300-style incidents (deterministic)
 ├── fixtures/cache/        committed replay artifacts (the OSS archive, locally)
 ├── scripts/               bench.py · verify_offline.py · check_submission_readiness.py · regen_cache.py
 ├── docs/                  BENCH.md · SPEC-PROVENANCE.md · friction-log.md
-├── infra/fc/              handler.py · s.yaml · PROOF.md
+├── infra/fc/              handler.py · wsgi.py · s.yaml · PROOF.md (LIVE on Alibaba FC)
 ├── .env.example           optional DASHSCOPE_API_KEY + runtime path overrides
 └── LICENSE, pyproject.toml
 ```

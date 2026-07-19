@@ -8,6 +8,10 @@ build/lib/
 .pytest_cache/
 .coverage
 
+# Serverless Devs vendored deps + workspace (from `s build`) — do not commit
+/python/
+.s/
+
 # runtime output (jobs, sqlite db) — NOT the committed fixture cache
 var/
 

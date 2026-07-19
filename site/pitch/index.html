@@ -473,7 +473,7 @@ invariants <span class="t-ok">I1-I4 PASS</span></div>
     <h2 class="headline" style="font-size:64px; margin-bottom:48px;">Everything claimed is green. Offline.</h2>
     <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:24px; margin-bottom:44px;">
       <div style="background:var(--color-bg-elevated); border:1px solid var(--border); border-radius:16px; padding:34px 28px;">
-        <div style="font-family:var(--font-display); font-size:66px; font-weight:900; color:var(--color-accent);">420</div>
+        <div style="font-family:var(--font-display); font-size:66px; font-weight:900; color:var(--color-accent);">421</div>
         <div class="body-lg" style="font-size:20px;">tests passing</div>
       </div>
       <div style="background:var(--color-bg-elevated); border:1px solid var(--border); border-radius:16px; padding:34px 28px;">
@@ -494,9 +494,10 @@ invariants <span class="t-ok">I1-I4 PASS</span></div>
       <span class="chip">CodeQL + TruffleHog + pip-audit</span>
       <span class="chip">bench sweep $2/$4/$8 committed</span>
       <span class="chip">playable offline animatic (<b>preview</b>)</span>
+      <span class="chip">deployed on Alibaba Function Compute ☁️</span>
     </div>
-    <p style="margin-top:40px; font-family:var(--font-mono); font-size:16px; color:var(--color-dim);">Honest scope: graded artifact runs on deterministic FakeQwen; live image/video/TTS surfaces are payload-complete behind DASHSCOPE_API_KEY. Function Compute handler written, not yet deployed. It says so in the README.</p>
-    <aside class="speaker-notes">No invented users — this is a hackathon build and the traction is engineering receipts: 420 tests at 100 percent coverage running fully offline, deterministic replay across three seed incidents, and a five-stage CI pipeline. And note the honesty line at the bottom — the README discloses exactly what's mocked versus real.</aside>
+    <p style="margin-top:40px; font-family:var(--font-mono); font-size:16px; color:var(--color-dim);">Deployed live on Alibaba Function Compute (managed python3.10) — <b>/verify</b> replays the signed ledger and re-verifies the Ed25519/Merkle chain in the cloud, <b>/run</b> replays the pipeline, <b>/health</b> is up. Honest scope: graded artifact runs on deterministic FakeQwen; live image/video/TTS surfaces are payload-complete behind DASHSCOPE_API_KEY. It says so in the README.</p>
+    <aside class="speaker-notes">No invented users — this is a hackathon build and the traction is engineering receipts: 421 tests at 100 percent coverage running fully offline, deterministic replay across three seed incidents, a five-stage CI pipeline, and a live deployment on Alibaba Function Compute serving the signed-ledger verify path. And note the honesty line at the bottom — the README discloses exactly what's mocked versus real.</aside>
   </section>
 
   <!-- ════════ SLIDE 10 · THE ASK ════════ -->
@@ -510,7 +511,7 @@ invariants <span class="t-ok">I1-I4 PASS</span></div>
         <div class="terminal-frame" style="max-width:760px;">
           <div class="terminal-bar">judge path — offline</div>
           <div class="terminal-body" style="font-size:17px;"><span class="t-dim">$</span> <span class="t-cmd">git clone https://github.com/edycutjong/foreshadow</span>
-<span class="t-dim">$</span> <span class="t-cmd">./.venv/bin/pytest</span>            <span class="t-dim"># 420 passed</span>
+<span class="t-dim">$</span> <span class="t-cmd">./.venv/bin/pytest</span>            <span class="t-dim"># 421 passed</span>
 <span class="t-dim">$</span> <span class="t-cmd">foreshadow replay --incident forklift</span></div>
         </div>
         <p style="margin-top:34px; font-size:22px; color:var(--color-dim);">
