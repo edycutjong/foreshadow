@@ -1,44 +1,48 @@
-# Serverless Devs spec for the Foreshadow pipeline worker on Alibaba
-# Function Compute (https://www.serverless-devs.com). Deploy with:
-#   s deploy
-# STATUS: template is complete and valid; the account has not been deployed to
-# yet (see PROOF.md). Region/account placeholders are read from the shell env
-# so no secrets live in the repo.
+# Serverless Devs (s.yaml) — Foreshadow on Alibaba Function Compute 3.0.
+#
+# MANAGED python3.10 runtime (no container / no ACR / no real-name verification).
+# Foreshadow targets 3.12; infra/fc/wsgi.py shims enum.StrEnum before importing
+# the package, so the app runs unchanged on the 3.10 managed runtime.
+#
+#   s build --use-docker   # installs requirements.txt into .s/build/.../python
+#   s deploy               # zips code + deps, creates the fn + HTTP trigger
+#
+# Endpoints (anonymous HTTP trigger):
+#   GET /verify   re-verify the committed forklift replay (Ed25519 + Merkle + I1-I4)
+#   GET /run      run one deterministic offline pipeline replay
+#   GET /health   liveness
 
 edition: 3.0.0
-name: foreshadow-worker
+name: foreshadow-fc
 access: default
 
 vars:
-  region: ${env.ALIBABA_REGION}          # e.g. ap-southeast-1
-  service: foreshadow
+  region: ap-southeast-1
 
 resources:
-  worker:
+  foreshadow:
     component: fc3
     props:
       region: ${vars.region}
-      functionName: foreshadow-pipeline-worker
-      description: "Foreshadow: incident report -> provenance-signed safety film"
-      runtime: python3.12
-      handler: handler.handler
-      memorySize: 2048
-      timeout: 900                        # a full film job (async renders) fits in 15m
-      cpu: 1
+      functionName: foreshadow
+      description: "Foreshadow — incident report -> provenance-signed safety film (Qwen Cloud)"
+      runtime: python3.10
+      handler: infra.fc.wsgi.handler
+      cpu: 0.35
+      memorySize: 512
       diskSize: 512
-      code: ./
+      timeout: 60
+      instanceConcurrency: 5
+      # code root = the build dir (this file lives in infra/fc/).
+      code: ../../
       environmentVariables:
-        FORESHADOW_HOME: /mnt/foreshadow
-        FORESHADOW_TRANSPORT: live
-        DASHSCOPE_API_KEY: ${env.DASHSCOPE_API_KEY}
-      layers:
-        # Prebuilt ffmpeg layer for the stitch stage; local fallback documented
-        # in src/foreshadow/render/stitch.py when the binary is absent.
-        - ${env.FFMPEG_LAYER_ARN}
+        # s build installs requirements.txt deps under /code/python
+        PYTHONPATH: /code/python
       triggers:
         - triggerName: http
           triggerType: http
           triggerConfig:
             authType: anonymous
             methods:
+              - GET
               - POST
