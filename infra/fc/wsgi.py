@@ -34,7 +34,7 @@ from pathlib import Path
 # --- 3.10 compat shims: must run before any foreshadow import ----------------
 # enum.StrEnum is 3.11+; it is just str+Enum (byte-identical behaviour).
 if not hasattr(enum, "StrEnum"):
-    class StrEnum(str, enum.Enum):  # noqa: D401 - drop-in for 3.11 enum.StrEnum
+    class StrEnum(str, enum.Enum):  # noqa: D401,UP042 - 3.11 enum.StrEnum polyfill for the 3.10 runtime
         def __str__(self) -> str:
             return str(self.value)
     enum.StrEnum = StrEnum  # type: ignore[attr-defined]
@@ -42,7 +42,7 @@ if not hasattr(enum, "StrEnum"):
 # datetime.UTC is a 3.11+ alias for datetime.timezone.utc (foreshadow.utils uses
 # `from datetime import UTC`); expose it so the import resolves on 3.10.
 if not hasattr(_dt, "UTC"):
-    _dt.UTC = _dt.timezone.utc  # type: ignore[attr-defined]
+    _dt.UTC = _dt.timezone.utc  # type: ignore[attr-defined]  # noqa: UP017
 
 # The package ships under src/ in the deployed code bundle (code root = build/).
 _HERE = os.path.dirname(os.path.abspath(__file__))
